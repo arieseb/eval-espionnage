@@ -1,0 +1,17 @@
+{
+    "name": "arieseb/spy_site",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Sébastien Thomas-Girard",
+            "email": "arieseb@gmail.com"
+        }
+    ],
+  "require": {
+    "ext-pdo": "*"
+  }
+}
