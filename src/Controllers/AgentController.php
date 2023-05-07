@@ -34,6 +34,15 @@ class AgentController extends Agent
         }
     }
 
+    public function showAgent($id)
+    {
+        try {
+            return $this->getAgent($id);
+        } catch (QueryException $e) {
+            echo '<p>' . $e->getMessage() . '</p>';
+        }
+    }
+
     public function updateAgent()
     {
         try {

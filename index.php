@@ -318,6 +318,30 @@ $router->addRoute(
     'updateMissionHideout'
 );
 
+$router->addRoute(
+    'delete-mission-target',
+    '/spy_site/delete-mission-target',
+    'POST',
+    \App\Controllers\MissionController::class,
+    'deleteMissionTarget'
+);
+
+$router->addRoute(
+    'delete-mission-contact',
+    '/spy_site/delete-mission-contact',
+    'POST',
+    \App\Controllers\MissionController::class,
+    'deleteMissionContact'
+);
+
+$router->addRoute(
+    'delete-mission-agent',
+    '/spy_site/delete-mission-agent',
+    'POST',
+    \App\Controllers\MissionController::class,
+    'deleteMissionAgent'
+);
+
 $requestUri = $_SERVER['REQUEST_URI'];
 $requestMethod = $_SERVER['REQUEST_METHOD'];
 

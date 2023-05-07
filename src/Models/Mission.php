@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Controllers\AgentController;
+use App\Controllers\ContactController;
+use App\Controllers\TargetController;
 use App\Exceptions\QueryException;
 
 class Mission extends Database
@@ -46,7 +49,7 @@ class Mission extends Database
         $contactNationalityParams = ['id' => $contact_id];
         $contactNationality = $this->fetchData($contactNationalityQuery, $contactNationalityParams);
 
-        $agentSpecialtyQuery = 'SELECT * FROM agent_specialty WHERE agent_id = :id';
+        $agentSpecialtyQuery = 'SELECT specialty_id FROM agent_specialty WHERE agent_id = :id';
         $agentSpecialtyParams = ['id' => $agent_id];
         $agentSpecialtyData = $this->fetchAllData($agentSpecialtyQuery, $agentSpecialtyParams);
 
@@ -189,42 +192,50 @@ class Mission extends Database
     /**
      * @throws QueryException
      */
+    public function agentTargetCheck(string $table, string $comparison, $mission_id, $table_id): bool
+    {
+        $tableQuery = sprintf('SELECT country_id FROM %s WHERE id = :id', $table);
+        $tableParams = ['id' => $table_id];
+        $tableData = $this->fetchData($tableQuery, $tableParams);
+
+        $missionTableQuery = sprintf('SELECT * FROM mission_%s WHERE mission_id = :mission_id', $table);
+        $missionTableParams = ['mission_id' => $mission_id];
+        $missionTableData = $this->fetchAllData($missionTableQuery, $missionTableParams);
+
+        $missionComparisonQuery = sprintf('SELECT * FROM mission_%s WHERE mission_id = :mission_id', $comparison);
+        $missionComparisonParams = ['mission_id' => $mission_id];
+        $missionComparisonData = $this->fetchAllData($missionComparisonQuery, $missionComparisonParams);
+
+        foreach ($missionTableData as $missionTable) {
+            if ($missionTable[sprintf('%s_id', $table)] === (int)$table_id && $missionTable['mission_id'] === (int)$mission_id) {
+                $message = "Cet individu est déjà impliqué dans cette mission";
+                throw new QueryException($message);
+            }
+        }
+
+        foreach ($missionComparisonData as $missionComparison) {
+            $query = sprintf('SELECT country_id FROM %s WHERE id = :id', $comparison);
+            $params = ['id' => $missionComparison[sprintf('%s_id', $comparison)]];
+            $data = $this->fetchData($query, $params);
+            if ($data['country_id'] === $tableData['country_id']) {
+                $message = "L'agent ne peut pas être de la même nationalité que la cible";
+                throw new QueryException($message);
+            }
+        }
+        return true;
+    }
+
+    /**
+     * @throws QueryException
+     */
     public function addTarget($mission_id, $target_id)
     {
-        $targetQuery = 'SELECT country_id FROM target WHERE id = :id';
-        $targetParams = ['id' => $target_id];
-        $targetData = $this->fetchData($targetQuery, $targetParams);
-
-        $missionAgentQuery = 'SELECT agent_id FROM mission_agent WHERE mission_id = :mission_id';
-        $missionAgentParams = ['mission_id' => $mission_id];
-        $missionAgentData = $this->fetchAllData($missionAgentQuery, $missionAgentParams);
-
-        $missionTargetQuery = 'SELECT * FROM mission_target WHERE mission_id = :mission_id';
-        $missionTargetParams = ['mission_id' => $mission_id];
-        $missionTargetData = $this->fetchAllData($missionTargetQuery, $missionTargetParams);
-
-        foreach ($missionTargetData as $missionTarget) {
-            if ($missionTarget['target_id'] === (int)$target_id && $missionTarget['mission_id'] === (int)$mission_id) {
-                $message = "Cette cible est déjà visée par cette mission";
-                throw new QueryException($message);
-            }
+        if ($this->agentTargetCheck('target', 'agent', $mission_id, $target_id) === true) {
+            $query = 'INSERT INTO mission_target (mission_id, target_id) VALUES (:mission_id, :target_id)';
+            $params = ['mission_id' => $mission_id, 'target_id' => $target_id];
+            $this->dbQuery($query, $params);
+            header('location: mission-manage');
         }
-
-        foreach ($missionAgentData as $missionAgent) {
-            $agentQuery = 'SELECT country_id FROM agent WHERE id = :id';
-            $agentParams = ['id' => $missionAgent['agent_id']];
-            $agentData = $this->fetchData($agentQuery, $agentParams);
-            if ($targetData['country_id'] === $agentData['country_id']) {
-                $message = "La cible ne peut pas être de la même nationalité que l'agent";
-                throw new QueryException($message);
-            }
-        }
-
-        $query = 'INSERT INTO mission_target (mission_id, target_id) VALUES (:mission_id, :target_id)';
-        $params = ['mission_id' => $mission_id, 'target_id' => $target_id];
-        $this->dbQuery($query, $params);
-
-        header('location: mission-manage');
     }
 
     /**
@@ -268,44 +279,14 @@ class Mission extends Database
      */
     public function addAgent($mission_id, $agent_id)
     {
-        $agentQuery = 'SELECT country_id FROM agent WHERE id = :id';
-        $agentParams = ['id' => $agent_id];
-        $agentData = $this->fetchData($agentQuery, $agentParams);
-
-        $missionQuery = 'SELECT country_id FROM mission WHERE id = :id';
-        $missionParams = ['id' => $mission_id];
-        $missionData = $this->fetchData($missionQuery, $missionParams);
-
-        $missionAgentQuery = 'SELECT * FROM mission_agent WHERE mission_id = :mission_id';
-        $missionAgentParams = ['mission_id' => $mission_id];
-        $missionAgentData = $this->fetchAllData($missionAgentQuery, $missionAgentParams);
-
-        $missionTargetQuery = 'SELECT * FROM mission_target WHERE mission_id = :mission_id';
-        $missionTargetParams = ['mission_id' => $mission_id];
-        $missionTargetData = $this->fetchAllData($missionTargetQuery, $missionTargetParams);
-
-        foreach ($missionAgentData as $missionAgent) {
-            if ($missionAgent['agent_id'] === (int)$agent_id && $missionAgent['mission_id'] === (int)$mission_id) {
-                $message = "Cet agent est déjà sollicité pour cette mission";
-                throw new QueryException($message);
-            }
+        if ($this->agentTargetCheck('agent', 'target', $mission_id, $agent_id) === true) {
+            var_dump($mission_id);
+            var_dump($agent_id);
+            $query = 'INSERT INTO mission_agent (mission_id, agent_id) VALUES (:mission_id, :agent_id)';
+            $params = ['mission_id' => $mission_id, 'agent_id' => $agent_id];
+            $this->dbQuery($query, $params);
+            header('location: mission-manage');
         }
-
-        foreach ($missionTargetData as $missionTarget) {
-            $targetQuery = 'SELECT country_id FROM target WHERE id = :id';
-            $targetParams = ['id' => $missionTarget['target_id']];
-            $targetData = $this->fetchData($targetQuery, $targetParams);
-            if ($agentData['country_id'] === $targetData['country_id']) {
-                $message = "L'agent ne peut pas être de la même nationalité que la cible";
-                throw new QueryException($message);
-            }
-        }
-
-        $query = 'INSERT INTO mission_agent (mission_id, agent_id) VALUES (:mission_id, :agent_id)';
-        $params = ['mission_id' => $mission_id, 'agent_id' => $agent_id];
-        $this->dbQuery($query, $params);
-
-        header('location: mission-manage');
     }
 
     /**
@@ -329,6 +310,77 @@ class Mission extends Database
             $params = ['id' => $mission_id, 'hideout_id' => $hideout_id];
             $this->dbQuery($query, $params);
             header('location: mission-manage');
+        }
+    }
+
+    /**
+     * @throws QueryException
+     */
+    public function getMission($id): array
+    {
+        $query = 'SELECT * FROM mission WHERE id = :id';
+        $params = ['id' => $id];
+        return $this->fetchData($query, $params);
+    }
+
+    /**
+     * @throws QueryException
+     */
+    public function deletionCheck(string $table, $mission_id, $table_id): bool
+    {
+        $verificationQuery = sprintf('SELECT %s_id FROM mission_%s WHERE mission_id = :mission_id', $table, $table);
+        $verificationParams = ['mission_id' => $mission_id];
+        $verificationData = $this->fetchAllData($verificationQuery, $verificationParams);
+
+        if(count($verificationData) === 1) {
+            $message = 'Impossible de supprimer cet acteur de la mission ' . $this->getMission($mission_id)['codename'];
+            throw new QueryException($message);
+        }
+
+        foreach ($verificationData as $missionEntry) {
+            if (in_array($table_id, $missionEntry)) {
+                $query = sprintf('DELETE FROM mission_%s WHERE mission_id = :mission_id AND %s_id = :%s_id', $table, $table, $table);
+                $params = ['mission_id' => $mission_id, sprintf('%s_id', $table) => $table_id];
+                $this->dbQuery($query, $params);
+                header('location: mission-manage');
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @throws QueryException
+     */
+    public function deleteTarget($mission_id, $target_id)
+    {
+        if ($this->deletionCheck('target', $mission_id, $target_id) === false) {
+            $target = new TargetController();
+            $message = $target->showTarget($target_id)['codename'] . ' n\'est pas une cible de la mission ' . $this->getMission($mission_id)['codename'];
+            throw new QueryException($message);
+        }
+    }
+
+    /**
+     * @throws QueryException
+     */
+    public function deleteContact($mission_id, $contact_id)
+    {
+        if ($this->deletionCheck('contact', $mission_id, $contact_id) === false) {
+            $contact = new ContactController();
+            $message = $contact->showContact($contact_id)['codename'] . ' n\'est pas un contact de la mission ' . $this->getMission($mission_id)['codename'];
+            throw new QueryException($message);
+        }
+    }
+
+    /**
+     * @throws QueryException
+     */
+    public function deleteAgent($mission_id, $agent_id)
+    {
+        if ($this->deletionCheck('agent', $mission_id, $agent_id) === false) {
+            $agent = new AgentController();
+            $message = $agent->showAgent($agent_id)['codename'] . ' n\'est pas un agent de la mission ' . $this->getMission($mission_id)['codename'];
+            throw new QueryException($message);
         }
     }
 

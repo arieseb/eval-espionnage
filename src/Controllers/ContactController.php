@@ -33,6 +33,15 @@ class ContactController extends Contact
         }
     }
 
+    public function showContact($id)
+    {
+        try {
+            return $this->getContact($id);
+        } catch (QueryException $e) {
+            echo '<p>' . $e->getMessage() . '</p>';
+        }
+    }
+
     public function updateContact()
     {
         try {

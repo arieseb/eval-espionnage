@@ -116,6 +116,39 @@ class MissionController extends Mission
         }
     }
 
+    public function deleteMissionTarget()
+    {
+        try {
+            if (isset($_POST['deleteMissionTarget'])) {
+                $this->deleteTarget($_POST['existing-mission'], $_POST['target_id']);
+            }
+        } catch (QueryException $e) {
+            echo '<p>' . $e->getMessage() . '</p>';
+        }
+    }
+
+    public function deleteMissionContact()
+    {
+        try {
+            if (isset($_POST['deleteMissionContact'])) {
+                $this->deleteContact($_POST['existing-mission'], $_POST['contact_id']);
+            }
+        } catch (QueryException $e) {
+            echo '<p>' . $e->getMessage() . '</p>';
+        }
+    }
+
+    public function deleteMissionAgent()
+    {
+        try {
+            if (isset($_POST['deleteMissionAgent'])) {
+                $this->deleteAgent($_POST['existing-mission'], $_POST['agent_id']);
+            }
+        } catch (QueryException $e) {
+            echo '<p>' . $e->getMessage() . '</p>';
+        }
+    }
+
     public function render(): void
     {
         $title = 'Gestion des missions';

@@ -33,6 +33,15 @@ class TargetController extends Target
         }
     }
 
+    public function showTarget($id)
+    {
+        try {
+            return $this->getTarget($id);
+        } catch (QueryException $e) {
+            echo '<p>' . $e->getMessage() . '</p>';
+        }
+    }
+
     public function updateTarget()
     {
         try {
