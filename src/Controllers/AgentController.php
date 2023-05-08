@@ -3,24 +3,27 @@
 namespace App\Controllers;
 
 use App\Exceptions\QueryException;
+use App\Exceptions\ValidationException;
 use App\Models\Agent;
+use App\Validation\Validation;
 
 class AgentController extends Agent
 {
     public function addAgent()
     {
+        $validation = new Validation();
         try {
             if (isset($_POST['submitAgent'])) {
                 $this->add(
-                    $_POST['codename'],
-                    $_POST['firstname'],
-                    $_POST['lastname'],
+                    $validation->codenameValidation(htmlspecialchars($_POST['codename'])),
+                    $validation->stringValidation(htmlspecialchars($_POST['firstname'])),
+                    $validation->stringValidation(htmlspecialchars($_POST['lastname'])),
                     $_POST['birthdate'],
                     $_POST['country_id'],
                     $_POST['specialty_id']
                 );
             }
-        } catch (QueryException $e) {
+        } catch (QueryException|ValidationException $e) {
             echo '<p>' . $e->getMessage() . '</p>';
         }
     }
@@ -45,18 +48,19 @@ class AgentController extends Agent
 
     public function updateAgent()
     {
+        $validation = new Validation();
         try {
             if (isset($_POST['updateAgent'])) {
                 $this->update(
                     $_POST['existing-agent'],
-                    $_POST['codename'],
-                    $_POST['firstname'],
-                    $_POST['lastname'],
+                    $validation->codenameValidation(htmlspecialchars($_POST['codename'])),
+                    $validation->stringValidation(htmlspecialchars($_POST['firstname'])),
+                    $validation->stringValidation(htmlspecialchars($_POST['lastname'])),
                     $_POST['birthdate'],
                     $_POST['country_id']
                 );
             }
-        } catch (QueryException $e) {
+        } catch (QueryException|ValidationException $e) {
             echo '<p>' . $e->getMessage() . '</p>';
         }
     }

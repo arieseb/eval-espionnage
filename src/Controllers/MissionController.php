@@ -3,19 +3,22 @@
 namespace App\Controllers;
 
 use App\Exceptions\QueryException;
+use App\Exceptions\ValidationException;
 use App\Models\Mission;
+use App\Validation\Validation;
 
 class MissionController extends Mission
 {
     public function addMission()
     {
+        $validation = new Validation();
         try {
             if (isset($_POST['submitMission'])) {
                 $this->add(
-                    $_POST['codename'],
-                    $_POST['title'],
-                    $_POST['description'],
-                    $_POST['type'],
+                    $validation->codenameValidation(htmlspecialchars($_POST['codename'])),
+                    $validation->stringValidation(htmlspecialchars($_POST['title'])),
+                    htmlspecialchars($_POST['description']),
+                    $validation->stringValidation(htmlspecialchars($_POST['type'])),
                     $_POST['start_date'],
                     $_POST['end_date'],
                     $_POST['country_id'],
@@ -25,7 +28,7 @@ class MissionController extends Mission
                     $_POST['contact_id']
                 );
             }
-        } catch (QueryException $e) {
+        } catch (QueryException|ValidationException $e) {
             echo '<p>' . $e->getMessage() . '</p>';
         }
     }

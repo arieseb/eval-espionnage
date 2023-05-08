@@ -199,14 +199,6 @@ $router->addRoute(
 );
 
 $router->addRoute(
-    'update-specialty',
-    '/spy_site/update-specialty',
-    'POST',
-    \App\Controllers\SpecialtyController::class,
-    'updateSpecialty'
-);
-
-$router->addRoute(
     'delete-specialty',
     '/spy_site/delete-specialty',
     'POST',

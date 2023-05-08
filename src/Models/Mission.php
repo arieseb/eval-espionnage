@@ -60,6 +60,14 @@ class Mission extends Database
             }
         }
 
+        $startDate = new \DateTime($start_date);
+        $endDate = new \DateTime($end_date);
+
+        if ($endDate < $startDate) {
+            $message = "La date de fin de mission ne peut pas être antérieure à sa date de début";
+            throw new QueryException($message);
+        }
+
         if ($targetNationality['country_id'] === $agentNationality['country_id']) {
             $message = "La cible ne peut pas être de la même nationalité que l'agent";
             throw new QueryException($message);

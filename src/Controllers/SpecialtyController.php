@@ -3,17 +3,20 @@
 namespace App\Controllers;
 
 use App\Exceptions\QueryException;
+use App\Exceptions\ValidationException;
 use App\Models\Specialty;
+use App\Validation\Validation;
 
 class SpecialtyController extends Specialty
 {
     public function addSpecialty()
     {
+        $validation = new Validation();
         try {
             if (isset($_POST['submitSpecialty'])) {
-                $this->add($_POST['name']);
+                $this->add($validation->stringValidation(htmlspecialchars($_POST['name'])));
             }
-        } catch (QueryException $e) {
+        } catch (QueryException|ValidationException $e) {
             echo '<p>' . $e->getMessage() . '</p>';
         }
     }
@@ -31,17 +34,6 @@ class SpecialtyController extends Specialty
     {
         try {
             return $this->getSpecialty($id);
-        } catch (QueryException $e) {
-            echo '<p>' . $e->getMessage() . '</p>';
-        }
-    }
-
-    public function updateSpecialty()
-    {
-        try {
-            if (isset($_POST['updateSpecialty'])) {
-                $this->update($_POST['existing-specialty'], $_POST['name']);
-            }
         } catch (QueryException $e) {
             echo '<p>' . $e->getMessage() . '</p>';
         }

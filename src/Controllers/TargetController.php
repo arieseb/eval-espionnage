@@ -3,23 +3,26 @@
 namespace App\Controllers;
 
 use App\Exceptions\QueryException;
+use App\Exceptions\ValidationException;
 use App\Models\Target;
+use App\Validation\Validation;
 
 class TargetController extends Target
 {
     public function addTarget()
     {
+        $validation = new Validation();
         try {
             if (isset($_POST['submitTarget'])) {
                 $this->add(
-                    $_POST['codename'],
-                    $_POST['firstname'],
-                    $_POST['lastname'],
+                    $validation->codenameValidation(htmlspecialchars($_POST['codename'])),
+                    $validation->stringValidation(htmlspecialchars($_POST['firstname'])),
+                    $validation->stringValidation(htmlspecialchars($_POST['lastname'])),
                     $_POST['birthdate'],
                     $_POST['country_id']
                 );
             }
-        } catch (QueryException $e) {
+        } catch (QueryException|ValidationException $e) {
             echo '<p>' . $e->getMessage() . '</p>';
         }
     }
@@ -44,18 +47,19 @@ class TargetController extends Target
 
     public function updateTarget()
     {
+        $validation = new Validation();
         try {
             if (isset($_POST['updateTarget'])) {
                 $this->update(
                     $_POST['existing-target'],
-                    $_POST['codename'],
-                    $_POST['firstname'],
-                    $_POST['lastname'],
+                    $validation->codenameValidation(htmlspecialchars($_POST['codename'])),
+                    $validation->stringValidation(htmlspecialchars($_POST['firstname'])),
+                    $validation->stringValidation(htmlspecialchars($_POST['lastname'])),
                     $_POST['birthdate'],
                     $_POST['country_id']
                 );
             }
-        } catch (QueryException $e) {
+        } catch (QueryException|ValidationException $e) {
             echo '<p>' . $e->getMessage() . '</p>';
         }
     }

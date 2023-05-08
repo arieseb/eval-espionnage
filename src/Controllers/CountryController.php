@@ -3,17 +3,23 @@
 namespace App\Controllers;
 
 use App\Exceptions\QueryException;
+use App\Exceptions\ValidationException;
 use App\Models\Country;
+use App\Validation\Validation;
 
 class CountryController extends Country
 {
     public function addCountry()
     {
+        $validation = new Validation();
         try {
             if (isset($_POST['submitCountry'])) {
-                $this->add($_POST['name'], $_POST['nationality']);
+                $this->add(
+                    $validation->stringValidation(htmlspecialchars($_POST['name'])),
+                    $validation->stringValidation(htmlspecialchars($_POST['nationality']))
+                );
             }
-        } catch (QueryException $e) {
+        } catch (QueryException|ValidationException $e) {
             echo '<p>' . $e->getMessage() . '</p>';
         }
     }
@@ -47,11 +53,16 @@ class CountryController extends Country
 
     public function updateCountry()
     {
+        $validation = new Validation();
         try {
             if (isset($_POST['updateCountry'])) {
-                $this->update($_POST['existing-country'], $_POST['name'], $_POST['nationality']);
+                $this->update(
+                    $_POST['existing-country'],
+                    $validation->stringValidation(htmlspecialchars($_POST['name'])),
+                    $validation->stringValidation(htmlspecialchars($_POST['nationality']))
+                );
             }
-        } catch (QueryException $e) {
+        } catch (QueryException|ValidationException $e) {
             echo '<p>' . $e->getMessage() . '</p>';
         }
     }

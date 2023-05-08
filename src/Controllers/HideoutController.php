@@ -3,17 +3,25 @@
 namespace App\Controllers;
 
 use App\Exceptions\QueryException;
+use App\Exceptions\ValidationException;
 use App\Models\Hideout;
+use App\Validation\Validation;
 
 class HideoutController extends Hideout
 {
     public function addHideout()
     {
+        $validation = new Validation();
         try {
             if (isset($_POST['submitHideout'])) {
-                $this->add($_POST['code'], $_POST['address'], $_POST['type'], $_POST['country_id']);
+                $this->add(
+                    $validation->codenameValidation(htmlspecialchars($_POST['code'])),
+                    htmlspecialchars($_POST['address']),
+                    $validation->stringValidation(htmlspecialchars($_POST['type'])),
+                    $_POST['country_id'])
+                ;
             }
-        } catch (QueryException $e) {
+        } catch (QueryException|ValidationException $e) {
             echo '<p>' . $e->getMessage() . '</p>';
         }
     }
@@ -38,17 +46,18 @@ class HideoutController extends Hideout
 
     public function updateHideout()
     {
+        $validation = new Validation();
         try {
             if (isset($_POST['updateHideout'])) {
                 $this->update(
                     $_POST['existing-hideout'],
-                    $_POST['code'],
-                    $_POST['address'],
-                    $_POST['type'],
+                    $validation->codenameValidation(htmlspecialchars($_POST['code'])),
+                    htmlspecialchars($_POST['address']),
+                    $validation->stringValidation(htmlspecialchars($_POST['type'])),
                     $_POST['country_id']
                 );
             }
-        } catch (QueryException $e) {
+        } catch (QueryException|ValidationException $e) {
             echo '<p>' . $e->getMessage() . '</p>';
         }
     }

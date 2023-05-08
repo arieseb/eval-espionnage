@@ -33,17 +33,6 @@ class Specialty extends Database
     /**
      * @throws QueryException
      */
-    public function update($id, $name)
-    {
-        $query = 'UPDATE specialty SET name = :name WHERE id = :id';
-        $params = ['id' => $id, 'name' => $name];
-        $this->dbQuery($query, $params);
-        header('location: agent-manage');
-    }
-
-    /**
-     * @throws QueryException
-     */
     public function delete($id)
     {
         $query = 'DELETE FROM specialty WHERE id = :id';

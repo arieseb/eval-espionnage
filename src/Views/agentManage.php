@@ -167,19 +167,6 @@
         <input type="text" name="name" id="specialty-name" placeholder="Nom">
         <button type="submit" name="submitSpecialty">Ajouter</button>
     </form>
-    <h3>Modifier une spécialité existante</h3>
-    <form method="POST" action="update-specialty">
-        <select name ="existing-specialty" id="existing-specialty">
-            <?php
-            foreach ($specialties->showSpecialties() as $specialty) {
-                echo '<option value="'.$specialty['id'].'">'.$specialty['name'].'</option>';
-            }
-            // TODO Placeholder dynamique en JS
-            ?>
-        </select>
-        <input type="text" name="name" id="specialty-name" placeholder="Nom">
-        <button type="submit" name="updateSpecialty">Modifier</button>
-    </form>
     <h3>Supprimer une spécialité existante</h3>
     <form method="POST" action="delete-specialty">
         <select name ="delete-specialty" id="delete-specialty">
