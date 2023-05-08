@@ -25,248 +25,338 @@ $missionContacts = new MissionContactController();
 $missionAgents = new MissionAgentController();
 ob_start();
 ?>
-    <div>
-        <a href="index">Retour à l'index</a>
-    </div>
 <?php if (!isset($_SESSION['email'])): ?>
     <div>
         <h1>CONFIDENTIEL</h1>
         <p>Vous n'êtes pas autorisé à consulter cette page</p>
     </div>
 <?php else: ?>
-    <h1>Gestion des missions</h1>
-    <?php include 'missionTable.php' ?>
-    <h2>Ajouter une nouvelle mission</h2>
+<?php include 'adminHeader.php'?>
+<h2 class="text-center">Gestion des missions</h2>
+<?php include 'missionTable.php' ?>
+<div class="mt-3">
+    <h3 class="text-center">Ajouter une nouvelle mission</h3>
     <form method="POST" action="add-mission">
-        <input type="text" name="codename" id="codename" placeholder="Nom de code">
-        <input type="text" name="title" id="title" placeholder="Titre de la mission">
-        <input type="text" name="type" id="type" placeholder="Type de mission">
-        <input type="date" name="start_date" id="start_date">
-        <input type="date" name="end_date" id="end_date">
-        <select name ="country_id" id="country_id">
-            <?php
-            foreach ($countries->showCountries() as $country) {
-                echo '<option value="'.$country['id'].'">'.$country['name'].'</option>';
-            }
-            ?>
-        </select>
-        </select>
-        <select name ="target_id" id="target_id">
-            <?php
-            foreach ($targets->showTargets() as $target) {
-                echo '<option value="'.$target['id'].'">'.$target['codename'].'</option>';
-            }
-            // TODO Placeholder dynamique en JS
-            ?>
-        </select>
-        <select name ="contact_id" id="contact_id">
-            <?php
-            foreach ($contacts->showContacts() as $contact) {
-                echo '<option value="'.$contact['id'].'">'.$contact['codename'].'</option>';
-            }
-            ?>
-        </select>
-        <select name ="agent_id" id="agent_id">
-        <?php
-        foreach ($agents->showAgents() as $agent) {
-            echo '<option value="'.$agent['id'].'">'.$agent['codename'].'</option>';
-        }
-        ?>
-        </select>
-        <select name ="specialty_id" id="specialty_id">
-            <?php
-            foreach ($specialties->showSpecialties() as $specialty) {
-                echo '<option value="'.$specialty['id'].'">'.$specialty['name'].'</option>';
-            }
-            ?>
-        </select>
-        <textarea name="description" id="description" placeholder="Description de la mission"></textarea>
-        <button type="submit" name="submitMission">Ajouter</button>
+        <div class="grid-container">
+            <div class="grid-item flex-column-center">
+                <input type="text" name="codename" id="codename" placeholder="Nom de code" aria-label="Nom de code">
+                <input type="text" name="title" id="title" placeholder="Titre de la mission" aria-label="Titre">
+                <input type="text" name="type" id="type" placeholder="Type de mission" aria-label="Type">
+            </div>
+            <div class="grid-item flex-column-center">
+                <div>
+                    <label for="start_date">Date de début : </label>
+                    <input type="date" name="start_date" id="start_date">
+                </div>
+                <div>
+                    <label for="end_date">Date de fin : </label>
+                    <input type="date" name="end_date" id="end_date">
+                </div>
+                <div>
+                    <label for="country_id">Pays : </label>
+                    <select name ="country_id" id="country_id">
+                        <?php
+                        foreach ($countries->showCountries() as $country) {
+                            echo '<option value="'.$country['id'].'">'.$country['name'].'</option>';
+                        }
+                        ?>
+                    </select>
+                </div>
+            </div>
+            <div class="grid-item flex-column-center">
+                <div>
+                    <label for="target_id">Cible : </label>
+                    <select name ="target_id" id="target_id">
+                        <?php
+                        foreach ($targets->showTargets() as $target) {
+                            echo '<option value="'.$target['id'].'">'.$target['codename'].'</option>';
+                        }
+                        // TODO Placeholder dynamique en JS
+                        ?>
+                    </select>
+                </div>
+                <div>
+                    <label for="contact_id">Contact : </label>
+                    <select name ="contact_id" id="contact_id" aria-label="Contact">
+                        <?php
+                        foreach ($contacts->showContacts() as $contact) {
+                            echo '<option value="'.$contact['id'].'">'.$contact['codename'].'</option>';
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div>
+                    <label for="agent_id">Agent : </label>
+                    <select name ="agent_id" id="agent_id" aria-label="Agent">
+                        <?php
+                        foreach ($agents->showAgents() as $agent) {
+                            echo '<option value="'.$agent['id'].'">'.$agent['codename'].'</option>';
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div>
+                    <label for="specialty_id">Spécialité : </label>
+                    <select name ="specialty_id" id="specialty_id" aria-label="Spécialité">
+                        <?php
+                        foreach ($specialties->showSpecialties() as $specialty) {
+                            echo '<option value="'.$specialty['id'].'">'.$specialty['name'].'</option>';
+                        }
+                        ?>
+                    </select>
+                </div>
+            </div>
+            <div class="grid-item flex-column-center">
+                <textarea name="description" id="description" placeholder="Description de la mission" aria-label="Description"></textarea>
+                <button type="submit" name="submitMission" class="align-self-right mt-3">Ajouter</button>
+            </div>
+        </div>
     </form>
-    <h2>Ajouter une planque à une mission</h2>
-    <form method="POST" action="add-mission-hideout">
-        <select name ="existing-mission" id="existing-mission">
-            <?php
-            foreach ($missions->showMissions() as $mission) {
-                echo '<option value="'.$mission['id'].'">'.$mission['codename'].'</option>';
-            }
-            // TODO Placeholder dynamique en JS
-            ?>
-        </select>
-        <select name ="hideout_id" id="hideout_id">
-            <?php
-            foreach ($hideouts->showHideouts() as $hideout) {
-                echo '<option value="'.$hideout['id'].'">'.$hideout['code'].'</option>';
-            }
-            ?>
-        </select>
-        <button type="submit" name="addMissionHideout">Ajouter</button>
-    </form>
-    <h2>Changer la planque d'une mission</h2>
-    <form method="POST" action="update-mission-hideout">
-        <select name ="existing-mission" id="existing-mission">
-            <?php
-            foreach ($missions->showMissions() as $mission) {
-                echo '<option value="'.$mission['id'].'">'.$mission['codename'].'</option>';
-            }
-            // TODO Placeholder dynamique en JS
-            ?>
-        </select>
-        <select name ="hideout_id" id="hideout_id">
-            <?php
-            foreach ($hideouts->showHideouts() as $hideout) {
-                echo '<option value="'.$hideout['id'].'">'.$hideout['code'].'</option>';
-            }
-            ?>
-        </select>
-        <button type="submit" name="updateMissionHideout">Ajouter</button>
-    </form>
-    <h2>Ajouter une cible à une mission</h2>
-    <form method="POST" action="add-mission-target">
-        <select name ="existing-mission" id="existing-mission">
-            <?php
-            foreach ($missions->showMissions() as $mission) {
-                echo '<option value="'.$mission['id'].'">'.$mission['codename'].'</option>';
-            }
-            // TODO Placeholder dynamique en JS
-            ?>
-        </select>
-        <select name ="target_id" id="target_id">
-            <?php
-            foreach ($targets->showTargets() as $target) {
-                echo '<option value="'.$target['id'].'">'.$target['codename'].'</option>';
-            }
-            ?>
-        </select>
-        <button type="submit" name="addMissionTarget">Ajouter</button>
-    </form>
-    <h2>Retirer une cible d'une mission</h2>
-    <form method="POST" action="delete-mission-target">
-        <select name ="existing-mission" id="existing-mission">
-            <?php
-            foreach ($missions->showMissions() as $mission) {
-                echo '<option value="'.$mission['id'].'">'.$mission['codename'].'</option>';
-            }
-            // TODO Placeholder dynamique en JS
-            ?>
-        </select>
-        <select name ="target_id" id="target_id">
-            <?php
-            foreach ($targets->showTargets() as $target) {
-                echo '<option value="'.$target['id'].'">'.$target['codename'].'</option>';
-            }
-            ?>
-        </select>
-        <button type="submit" name="deleteMissionTarget">Supprimer</button>
-    </form>
-    <h2>Ajouter un contact à une mission</h2>
-    <form method="POST" action="add-mission-contact">
-        <select name ="existing-mission" id="existing-mission">
-            <?php
-            foreach ($missions->showMissions() as $mission) {
-                echo '<option value="'.$mission['id'].'">'.$mission['codename'].'</option>';
-            }
-            // TODO Placeholder dynamique en JS
-            ?>
-        </select>
-        <select name ="contact_id" id="contact_id">
-            <?php
-            foreach ($contacts->showContacts() as $contact) {
-                echo '<option value="'.$contact['id'].'">'.$contact['codename'].'</option>';
-            }
-            ?>
-        </select>
-        <button type="submit" name="addMissionContact">Ajouter</button>
-    </form>
-    <h2>Retirer un contact d'une mission</h2>
-    <form method="POST" action="delete-mission-contact">
-        <select name ="existing-mission" id="existing-mission">
-            <?php
-            foreach ($missions->showMissions() as $mission) {
-                echo '<option value="'.$mission['id'].'">'.$mission['codename'].'</option>';
-            }
-            // TODO Placeholder dynamique en JS
-            ?>
-        </select>
-        <select name ="contact_id" id="contact_id">
-            <?php
-            foreach ($contacts->showContacts() as $contact) {
-                echo '<option value="'.$contact['id'].'">'.$contact['codename'].'</option>';
-            }
-            ?>
-        </select>
-        <button type="submit" name="deleteMissionContact">Supprimer</button>
-    </form>
-    <h2>Ajouter un agent à une mission</h2>
-    <form method="POST" action="add-mission-agent">
-        <select name ="existing-mission" id="existing-mission">
-            <?php
-            foreach ($missions->showMissions() as $mission) {
-                echo '<option value="'.$mission['id'].'">'.$mission['codename'].'</option>';
-            }
-            // TODO Placeholder dynamique en JS
-            ?>
-        </select>
-        <select name ="agent_id" id="agent_id">
-            <?php
-            foreach ($agents->showAgents() as $agent) {
-                echo '<option value="'.$agent['id'].'">'.$agent['codename'].'</option>';
-            }
-            ?>
-        </select>
-        <button type="submit" name="addMissionAgent">Ajouter</button>
-    </form>
-    <h2>Retirer un agent d'une mission</h2>
-    <form method="POST" action="delete-mission-agent">
-        <select name ="existing-mission" id="existing-mission">
-            <?php
-            foreach ($missions->showMissions() as $mission) {
-                echo '<option value="'.$mission['id'].'">'.$mission['codename'].'</option>';
-            }
-            // TODO Placeholder dynamique en JS
-            ?>
-        </select>
-        <select name ="agent_id" id=agent_id">
-            <?php
-            foreach ($agents->showAgents() as $agent) {
-                echo '<option value="'.$agent['id'].'">'.$agent['codename'].'</option>';
-            }
-            ?>
-        </select>
-        <button type="submit" name="deleteMissionAgent">Supprimer</button>
-    </form>
-    <h2>Changer le statut d'une mission</h2>
-    <form method="POST" action="update-mission-status">
-        <select name ="existing-mission" id="existing-mission">
-            <?php
-            foreach ($missions->showMissions() as $mission) {
-                echo '<option value="'.$mission['id'].'">'.$mission['codename'].'</option>';
-            }
-            // TODO Placeholder dynamique en JS
-            ?>
-        </select>
-        <select name ="status_id" id="status_id">
-            <?php
-            foreach ($missionStatus->showMissionStatus() as $status) {
-                echo '<option value="'.$status['id'].'">'.$status['name'].'</option>';
-            }
-            // TODO Placeholder dynamique en JS
-            ?>
-        </select>
-        <button type="submit" name="updateMissionStatus">Mettre à jour</button>
-    </form>
-    <h2>Annuler une mission existante</h2>
-    <form method="POST" action="delete-mission">
-        <select name ="delete-mission" id="delete-mission">
-            <?php
-            foreach ($missions->showMissions() as $mission) {
-                echo '<option value="'.$mission['id'].'">'.$mission['codename'].'</option>';
-            }
-            // TODO Placeholder dynamique en JS
-            ?>
-        </select>
-        <button type="submit" name="deleteMission">Supprimer</button>
-    </form>
+</div>
+<div class="mt-3">
+    <div class="flex-around">
+        <div>
+            <h3>Ajouter une planque à une mission</h3>
+            <div class="text-center">
+                <form method="POST" action="add-mission-hideout">
+                    <select name ="existing-mission" id="existing-mission" aria-label="Mission">
+                        <?php
+                        foreach ($missions->showMissions() as $mission) {
+                            echo '<option value="'.$mission['id'].'">'.$mission['codename'].'</option>';
+                        }
+                        // TODO Placeholder dynamique en JS
+                        ?>
+                    </select>
+                    <select name ="hideout_id" id="hideout_id" aria-label="Planque">
+                        <?php
+                        foreach ($hideouts->showHideouts() as $hideout) {
+                            echo '<option value="'.$hideout['id'].'">'.$hideout['code'].'</option>';
+                        }
+                        ?>
+                    </select>
+                    <button type="submit" name="addMissionHideout">Ajouter</button>
+                </form>
+            </div>
+        </div>
+        <div>
+            <h3>Changer la planque d'une mission</h3>
+            <div class="text-center">
+                <form method="POST" action="update-mission-hideout">
+                    <select name ="existing-mission" id="existing-mission" aria-label="Mission">
+                        <?php
+                        foreach ($missions->showMissions() as $mission) {
+                            echo '<option value="'.$mission['id'].'">'.$mission['codename'].'</option>';
+                        }
+                        // TODO Placeholder dynamique en JS
+                        ?>
+                    </select>
+                    <select name ="hideout_id" id="hideout_id" aria-label="Planque">
+                        <?php
+                        foreach ($hideouts->showHideouts() as $hideout) {
+                            echo '<option value="'.$hideout['id'].'">'.$hideout['code'].'</option>';
+                        }
+                        ?>
+                    </select>
+                    <button type="submit" name="updateMissionHideout">Modifier</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="mt-3">
+    <div class="flex-around">
+        <div>
+            <h3>Ajouter une cible à une mission</h3>
+            <div class="text-center">
+                <form method="POST" action="add-mission-target">
+                    <select name ="existing-mission" id="existing-mission" aria-label="Mission">
+                        <?php
+                        foreach ($missions->showMissions() as $mission) {
+                            echo '<option value="'.$mission['id'].'">'.$mission['codename'].'</option>';
+                        }
+                        // TODO Placeholder dynamique en JS
+                        ?>
+                    </select>
+                    <select name ="target_id" id="target_id" aria-label="Cible">
+                        <?php
+                        foreach ($targets->showTargets() as $target) {
+                            echo '<option value="'.$target['id'].'">'.$target['codename'].'</option>';
+                        }
+                        ?>
+                    </select>
+                    <button type="submit" name="addMissionTarget">Ajouter</button>
+                </form>
+            </div>
+        </div>
+        <div>
+            <h3>Retirer une cible d'une mission</h3>
+            <div class="text-center">
+                <form method="POST" action="delete-mission-target">
+                    <select name ="existing-mission" id="existing-mission" aria-label="Mission">
+                        <?php
+                        foreach ($missions->showMissions() as $mission) {
+                            echo '<option value="'.$mission['id'].'">'.$mission['codename'].'</option>';
+                        }
+                        // TODO Placeholder dynamique en JS
+                        ?>
+                    </select>
+                    <select name ="target_id" id="target_id" aria-label="Cible">
+                        <?php
+                        foreach ($targets->showTargets() as $target) {
+                            echo '<option value="'.$target['id'].'">'.$target['codename'].'</option>';
+                        }
+                        ?>
+                    </select>
+                    <button type="submit" name="deleteMissionTarget" class="danger">Supprimer</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="mt-3">
+    <div class="flex-around">
+        <div>
+            <h3>Ajouter un contact à une mission</h3>
+            <div class="text-center">
+                <form method="POST" action="add-mission-contact">
+                    <select name ="existing-mission" id="existing-mission" aria-label="Mission">
+                        <?php
+                        foreach ($missions->showMissions() as $mission) {
+                            echo '<option value="'.$mission['id'].'">'.$mission['codename'].'</option>';
+                        }
+                        // TODO Placeholder dynamique en JS
+                        ?>
+                    </select>
+                    <select name ="contact_id" id="contact_id" aria-label="Contact">
+                        <?php
+                        foreach ($contacts->showContacts() as $contact) {
+                            echo '<option value="'.$contact['id'].'">'.$contact['codename'].'</option>';
+                        }
+                        ?>
+                    </select>
+                    <button type="submit" name="addMissionContact">Ajouter</button>
+                </form>
+            </div>
+        </div>
+        <div>
+            <h3>Retirer un contact d'une mission</h3>
+            <div class="text-center">
+                <form method="POST" action="delete-mission-contact">
+                    <select name ="existing-mission" id="existing-mission" aria-label="Mission">
+                        <?php
+                        foreach ($missions->showMissions() as $mission) {
+                            echo '<option value="'.$mission['id'].'">'.$mission['codename'].'</option>';
+                        }
+                        // TODO Placeholder dynamique en JS
+                        ?>
+                    </select>
+                    <select name ="contact_id" id="contact_id" aria-label="Contact">
+                        <?php
+                        foreach ($contacts->showContacts() as $contact) {
+                            echo '<option value="'.$contact['id'].'">'.$contact['codename'].'</option>';
+                        }
+                        ?>
+                    </select>
+                    <button type="submit" name="deleteMissionContact" class="danger">Supprimer</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="mt-3">
+    <div class="flex-around">
+        <div>
+            <h3>Ajouter un agent à une mission</h3>
+            <div class="text-center">
+                <form method="POST" action="add-mission-agent" aria-label="Mission">
+                    <select name ="existing-mission" id="existing-mission" aria-label="Mission">
+                        <?php
+                        foreach ($missions->showMissions() as $mission) {
+                            echo '<option value="'.$mission['id'].'">'.$mission['codename'].'</option>';
+                        }
+                        // TODO Placeholder dynamique en JS
+                        ?>
+                    </select>
+                    <select name ="agent_id" id="agent_id" aria-label="Agent">
+                        <?php
+                        foreach ($agents->showAgents() as $agent) {
+                            echo '<option value="'.$agent['id'].'">'.$agent['codename'].'</option>';
+                        }
+                        ?>
+                    </select>
+                    <button type="submit" name="addMissionAgent">Ajouter</button>
+                </form>
+            </div>
+        </div>
+        <div>
+            <h3>Retirer un agent d'une mission</h3>
+            <div class="text-center">
+                <form method="POST" action="delete-mission-agent">
+                    <select name ="existing-mission" id="existing-mission" aria-label="Mission">
+                        <?php
+                        foreach ($missions->showMissions() as $mission) {
+                            echo '<option value="'.$mission['id'].'">'.$mission['codename'].'</option>';
+                        }
+                        // TODO Placeholder dynamique en JS
+                        ?>
+                    </select>
+                    <select name ="agent_id" id=agent_id" aria-label="Agent">
+                        <?php
+                        foreach ($agents->showAgents() as $agent) {
+                            echo '<option value="'.$agent['id'].'">'.$agent['codename'].'</option>';
+                        }
+                        ?>
+                    </select>
+                    <button type="submit" name="deleteMissionAgent" class="danger">Supprimer</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="mt-3">
+    <div class="flex-around">
+        <div>
+            <h3>Changer le statut d'une mission</h3>
+            <div class="text-center">
+                <form method="POST" action="update-mission-status">
+                    <select name ="existing-mission" id="existing-mission" aria-label="Mission">
+                        <?php
+                        foreach ($missions->showMissions() as $mission) {
+                            echo '<option value="'.$mission['id'].'">'.$mission['codename'].'</option>';
+                        }
+                        // TODO Placeholder dynamique en JS
+                        ?>
+                    </select>
+                    <select name ="status_id" id="status_id" aria-label="Statut">
+                        <?php
+                        foreach ($missionStatus->showMissionStatus() as $status) {
+                            echo '<option value="'.$status['id'].'">'.$status['name'].'</option>';
+                        }
+                        // TODO Placeholder dynamique en JS
+                        ?>
+                    </select>
+                    <button type="submit" name="updateMissionStatus">Mettre à jour</button>
+                </form>
+            </div>
+        </div>
+        <div>
+            <h3>Annuler une mission existante</h3>
+            <div class="text-center">
+                <form method="POST" action="delete-mission">
+                    <select name ="delete-mission" id="delete-mission" aria-label="Mission">
+                        <?php
+                        foreach ($missions->showMissions() as $mission) {
+                            echo '<option value="'.$mission['id'].'">'.$mission['codename'].'</option>';
+                        }
+                        // TODO Placeholder dynamique en JS
+                        ?>
+                    </select>
+                    <button type="submit" name="deleteMission" class="danger">Supprimer</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <?php endif; ?>
 <?php
     $content = ob_get_clean();
