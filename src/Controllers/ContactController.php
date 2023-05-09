@@ -36,6 +36,14 @@ class ContactController extends Contact
         }
     }
 
+    public function fetchContacts()
+    {
+        $data = $this->showContacts();
+        $response = ['data' => $data];
+        header('Content-Type: application/json');
+        echo json_encode($response);
+    }
+
     public function showContact($id)
     {
         try {

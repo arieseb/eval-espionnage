@@ -22,10 +22,9 @@ $agents = new AgentController();
 $specialties = new SpecialtyController();
 $missionStatus = new MissionStatusController();
 $hideouts = new HideoutController();
-//TODO Changer la balise du titre selon la page
 ?>
     <div>
-        <h2 class="text-center">-- Liste des missions --</h2>
+        <div id="mission-list"></div>
         <div class="overflow-xxl">
             <table>
                 <thead>

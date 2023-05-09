@@ -36,6 +36,14 @@ class TargetController extends Target
         }
     }
 
+    public function fetchTargets()
+    {
+        $data = $this->showTargets();
+        $response = ['data' => $data];
+        header('Content-Type: application/json');
+        echo json_encode($response);
+    }
+
     public function showTarget($id)
     {
         try {

@@ -33,6 +33,14 @@ class CountryController extends Country
         }
     }
 
+    public function fetchCountries()
+    {
+        $data = $this->showCountries();
+        $response = ['data' => $data];
+        header('Content-Type: application/json');
+        echo json_encode($response);
+    }
+
     public function showCountry($id)
     {
         try {

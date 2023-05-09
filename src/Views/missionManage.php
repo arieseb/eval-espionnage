@@ -71,7 +71,6 @@ ob_start();
                         foreach ($targets->showTargets() as $target) {
                             echo '<option value="'.$target['id'].'">'.$target['codename'].'</option>';
                         }
-                        // TODO Placeholder dynamique en JS
                         ?>
                     </select>
                 </div>
@@ -124,7 +123,6 @@ ob_start();
                         foreach ($missions->showMissions() as $mission) {
                             echo '<option value="'.$mission['id'].'">'.$mission['codename'].'</option>';
                         }
-                        // TODO Placeholder dynamique en JS
                         ?>
                     </select>
                     <select name ="hideout_id" id="hideout_id" aria-label="Planque">
@@ -147,7 +145,6 @@ ob_start();
                         foreach ($missions->showMissions() as $mission) {
                             echo '<option value="'.$mission['id'].'">'.$mission['codename'].'</option>';
                         }
-                        // TODO Placeholder dynamique en JS
                         ?>
                     </select>
                     <select name ="hideout_id" id="hideout_id" aria-label="Planque">
@@ -174,7 +171,6 @@ ob_start();
                         foreach ($missions->showMissions() as $mission) {
                             echo '<option value="'.$mission['id'].'">'.$mission['codename'].'</option>';
                         }
-                        // TODO Placeholder dynamique en JS
                         ?>
                     </select>
                     <select name ="target_id" id="target_id" aria-label="Cible">
@@ -197,7 +193,6 @@ ob_start();
                         foreach ($missions->showMissions() as $mission) {
                             echo '<option value="'.$mission['id'].'">'.$mission['codename'].'</option>';
                         }
-                        // TODO Placeholder dynamique en JS
                         ?>
                     </select>
                     <select name ="target_id" id="target_id" aria-label="Cible">
@@ -224,7 +219,6 @@ ob_start();
                         foreach ($missions->showMissions() as $mission) {
                             echo '<option value="'.$mission['id'].'">'.$mission['codename'].'</option>';
                         }
-                        // TODO Placeholder dynamique en JS
                         ?>
                     </select>
                     <select name ="contact_id" id="contact_id" aria-label="Contact">
@@ -247,7 +241,6 @@ ob_start();
                         foreach ($missions->showMissions() as $mission) {
                             echo '<option value="'.$mission['id'].'">'.$mission['codename'].'</option>';
                         }
-                        // TODO Placeholder dynamique en JS
                         ?>
                     </select>
                     <select name ="contact_id" id="contact_id" aria-label="Contact">
@@ -274,7 +267,6 @@ ob_start();
                         foreach ($missions->showMissions() as $mission) {
                             echo '<option value="'.$mission['id'].'">'.$mission['codename'].'</option>';
                         }
-                        // TODO Placeholder dynamique en JS
                         ?>
                     </select>
                     <select name ="agent_id" id="agent_id" aria-label="Agent">
@@ -297,7 +289,6 @@ ob_start();
                         foreach ($missions->showMissions() as $mission) {
                             echo '<option value="'.$mission['id'].'">'.$mission['codename'].'</option>';
                         }
-                        // TODO Placeholder dynamique en JS
                         ?>
                     </select>
                     <select name ="agent_id" id=agent_id" aria-label="Agent">
@@ -324,7 +315,6 @@ ob_start();
                         foreach ($missions->showMissions() as $mission) {
                             echo '<option value="'.$mission['id'].'">'.$mission['codename'].'</option>';
                         }
-                        // TODO Placeholder dynamique en JS
                         ?>
                     </select>
                     <select name ="status_id" id="status_id" aria-label="Statut">
@@ -332,7 +322,6 @@ ob_start();
                         foreach ($missionStatus->showMissionStatus() as $status) {
                             echo '<option value="'.$status['id'].'">'.$status['name'].'</option>';
                         }
-                        // TODO Placeholder dynamique en JS
                         ?>
                     </select>
                     <button type="submit" name="updateMissionStatus">Mettre à jour</button>
@@ -348,7 +337,6 @@ ob_start();
                         foreach ($missions->showMissions() as $mission) {
                             echo '<option value="'.$mission['id'].'">'.$mission['codename'].'</option>';
                         }
-                        // TODO Placeholder dynamique en JS
                         ?>
                     </select>
                     <button type="submit" name="deleteMission" class="danger">Supprimer</button>

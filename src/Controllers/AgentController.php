@@ -37,6 +37,14 @@ class AgentController extends Agent
         }
     }
 
+    public function fetchAgents()
+    {
+        $data = $this->showAgents();
+        $response = ['data' => $data];
+        header('Content-Type: application/json');
+        echo json_encode($response);
+    }
+
     public function showAgent($id)
     {
         try {

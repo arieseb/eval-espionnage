@@ -71,11 +71,18 @@ textarea {
     height: 100px;
 }
 
+select, button {
+    height: 28px;
+}
+
+input {
+    height: 24px;
+}
+
 input, select, textarea {
     background-color: #181818;
     border: 1px solid #33FF00;
     color: #00FF33;
-    padding: 0.2rem;
 }
 
 input:focus, textarea:focus, select:focus {
@@ -84,7 +91,7 @@ input:focus, textarea:focus, select:focus {
     outline-color: #FFCC00;
 }
 
-input::placeholder, textarea::placeholder, select {
+input[type="text"],input::placeholder, textarea::placeholder, select {
     font-family: 'IBM Plex Mono', monospace;
     color: #00FF33;
 }
@@ -94,7 +101,7 @@ button {
     border: 1px solid #FFB000;
     font-family: 'IBM Plex Mono', monospace;
     color: #FFB000;
-    padding: 0.1rem 0.6rem 0.1rem 0.6rem;
+    padding: 0 0.6rem 0 0.6rem;
 }
 
 button:hover {
@@ -146,7 +153,7 @@ th {
 .danger {
     border-color: #FF0000;
     color: #FF0000;
-    padding: 0.2rem 0.6rem 0.2rem 0.6rem;
+    padding: 0 0.6rem 0 0.6rem;
 
 }
 
@@ -224,6 +231,14 @@ ul {
     .align-self-center-hd {
         align-self: center;
     }
+
+    .show-inline-hd {
+        display: inline;
+    }
+
+    .hidden-hd {
+        display: none;
+    }
 }
 
 @media screen and (max-width: 1530px)
@@ -231,14 +246,6 @@ ul {
     .overflow-xxl {
         overflow-x: auto;
         overflow-y: hidden;
-    }
-
-    .hidden-xxl {
-        display: none;
-    }
-
-    .show-inline-xxl {
-        display: inline;
     }
 }
 

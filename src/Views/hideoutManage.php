@@ -76,18 +76,17 @@
         <div>
             <h3 class="text-center">Modifier une planque existante</h3>
             <form method="POST" action="update-hideout" class="flex-column-xl">
-                <select name ="existing-hideout" id="existing-hideout" aria-label="Planque" class="mb-1-hd">
+                <select name ="existing-hideout" id="existing-hideout-select" aria-label="Planque" class="mb-1-hd">
                     <?php
                     foreach ($hideouts->showHideouts() as $hideout) {
                         echo '<option value="'.$hideout['id'].'">'.$hideout['code'].'</option>';
                     }
-                    // TODO Placeholder dynamique en JS
                     ?>
                 </select>
-                <input type="text" name="code" id="hideout-code" placeholder="Nom de code" aria-label="Nom de code" class="mb-1-hd">
-                <input type="text" name="type" id="hideout-type" placeholder="Type de planque" aria-label="Type de planque" class="mb-1-hd">
-                <input type="text" name="address" id="hideout-address" placeholder="Adresse" aria-label="Adresse" class="mb-1-hd">
-                <select name ="country_id" id="hideout-country_id" aria-label="Pays" class="mb-1-hd">
+                <input type="text" name="code" id="hideout-code-input" aria-label="Nom de code" class="mb-1-hd">
+                <input type="text" name="type" id="hideout-type-input" aria-label="Type de planque" class="mb-1-hd">
+                <input type="text" name="address" id="hideout-address-input" aria-label="Adresse" class="mb-1-hd">
+                <select name ="country_id" id="hideout-country_id-select" aria-label="Pays" class="mb-1-hd">
                     <?php
                     foreach ($countries->showCountries() as $country) {
                         echo '<option value="'.$country['id'].'">'.$country['name'].'</option>';
@@ -99,6 +98,7 @@
         </div>
     </div>
 </div>
+<script src="./scripts/hideout.js"></script>
 <?php endif; ?>
 <?php
     $content = ob_get_clean();

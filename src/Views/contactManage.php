@@ -85,24 +85,23 @@
         <div>
             <h3 class="text-center">Modifier un contact existant</h3>
             <form method="POST" action="update-contact" class="flex-column-hd">
-                <select name ="existing-contact" id="existing-contact" aria-label="Contact" class="mb-1-hd">
+                <select name ="existing-contact" id="existing-contact-select" aria-label="Contact" class="mb-1-hd">
                     <?php
                     foreach ($contacts->showContacts() as $contact) {
                         echo '<option value="'.$contact['id'].'">'.$contact['codename'].'</option>';
                     }
-                    // TODO Placeholder dynamique en JS
                     ?>
                 </select>
-                <input type="text" name="codename" id="contact-codename" placeholder="Nom de code" aria-label="Nom de code"class="mb-1-hd">
-                <input type="text" name="firstname" id="contact-firstname" placeholder="Prénom" aria-label="Prénom"class="mb-1-hd">
-                <input type="text" name="lastname" id="contact-lastname" placeholder="Nom" aria-label="Nom"class="mb-1-hd">
+                <input type="text" name="codename" id="contact-codename-input" aria-label="Nom de code"class="mb-1-hd">
+                <input type="text" name="firstname" id="contact-firstname-input" aria-label="Prénom"class="mb-1-hd">
+                <input type="text" name="lastname" id="contact-lastname-input" aria-label="Nom"class="mb-1-hd">
                 <span>
                     <label for="contact-birthdate">Date de naissance : </label>
-                    <input type="date" name="birthdate" id="contact-birthdate" class="mb-1-hd">
+                    <input type="date" name="birthdate" id="contact-birthdate-input" class="mb-1-hd">
                 </span>
                 <span>
                     <label for="contact-country_id">Nationalité : </label>
-                    <select name ="country_id" id="contact-country_id" class="mb-1-hd">
+                    <select name ="country_id" id="contact-country_id-select" class="mb-1-hd">
                         <?php
                         foreach ($countries->showCountries() as $country) {
                             echo '<option value="'.$country['id'].'">'.$country['nationality'].'</option>';
@@ -115,6 +114,7 @@
         </div>
     </div>
 </div>
+<script src="./scripts/contact.js"></script>
 <?php endif; ?>
 <?php
     $content = ob_get_clean();

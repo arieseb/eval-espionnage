@@ -85,24 +85,23 @@ ob_start();
         <div>
             <h3>Modifier une cible existante</h3>
             <form method="POST" action="update-target" class="flex-column-hd">
-                <select name ="existing-target" id="existing-target" aria-label="Cible" class="mb-1-hd">
+                <select name ="existing-target" id="existing-target-select" aria-label="Cible" class="mb-1-hd">
                     <?php
                     foreach ($targets->showTargets() as $target) {
                         echo '<option value="'.$target['id'].'">'.$target['codename'].'</option>';
                     }
-                    // TODO Placeholder dynamique en JS
                     ?>
                 </select>
-                <input type="text" name="codename" id="target-codename" placeholder="Nom de code" aria-label="Nom de code" class="mb-1-hd">
-                <input type="text" name="firstname" id="target-firstname" placeholder="Prénom" aria-label="Prénom" class="mb-1-hd">
-                <input type="text" name="lastname" id="target-lastname" placeholder="Nom" aria-label="Nom" class="mb-1-hd">
+                <input type="text" name="codename" id="target-codename-input" aria-label="Nom de code" class="mb-1-hd">
+                <input type="text" name="firstname" id="target-firstname-input" aria-label="Prénom" class="mb-1-hd">
+                <input type="text" name="lastname" id="target-lastname-input" aria-label="Nom" class="mb-1-hd">
                 <span>
                     <label for="target-birthdate">Date de naissance : </label>
-                    <input type="date" name="birthdate" id="target-birthdate"class="mb-1-hd">
+                    <input type="date" name="birthdate" id="target-birthdate-input"class="mb-1-hd">
                 </span>
                 <span>
                     <label for="target-country_id">Nationalité : </label>
-                    <select name ="country_id" id="target-country_id"class="mb-1-hd">
+                    <select name ="country_id" id="target-country_id-select"class="mb-1-hd">
                         <?php
                         foreach ($countries->showCountries() as $country) {
                             echo '<option value="'.$country['id'].'">'.$country['nationality'].'</option>';
@@ -115,6 +114,7 @@ ob_start();
         </div>
     </div>
 </div>
+<script src="./scripts/target.js"></script>
 <?php endif; ?>
 <?php
     $content = ob_get_clean();

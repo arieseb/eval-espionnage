@@ -94,24 +94,23 @@
             <div>
                 <h3 class="text-center">Modifier un agent existant</h3>
                 <form method="POST" action="update-agent" class="flex-column-fhd">
-                    <select name ="existing-agent" id="existing-agent" aria-label="Agent" class="mb-1-fhd">
+                    <select name ="existing-agent" id="existing-agent-select" aria-label="Agent" class="mb-1-fhd">
                         <?php
                         foreach ($agents->showAgents() as $agent) {
                             echo '<option value="'.$agent['id'].'">'.$agent['codename'].'</option>';
                         }
-                        // TODO Placeholder dynamique en JS
                         ?>
                     </select>
-                    <input type="text" name="codename" id="agent-codename" placeholder="Nom de code" aria-label="Nom de code" class="mb-1-fhd">
-                    <input type="text" name="firstname" id="agent-firstname" placeholder="Prénom" aria-label="Prénom" class="mb-1-fhd">
-                    <input type="text" name="lastname" id="agent-lastname" placeholder="Nom" aria-label="Nom" class="mb-1-fhd">
+                    <input type="text" name="codename" id="agent-codename-input" aria-label="Nom de code" class="mb-1-fhd">
+                    <input type="text" name="firstname" id="agent-firstname-input" aria-label="Prénom" class="mb-1-fhd">
+                    <input type="text" name="lastname" id="agent-lastname-input" aria-label="Nom" class="mb-1-fhd">
                     <span>
                         <label for="agent-birthdate">Date de naissance : </label>
-                        <input type="date" name="birthdate" id="agent-birthdate" class="mb-1-fhd">
+                        <input type="date" name="birthdate" id="agent-birthdate-input" class="mb-1-fhd">
                     </span>
                     <span>
                         <label for="agent-country_id">Nationalité : </label>
-                        <select name ="country_id" id="agent-country_id" class="mb-1-fhd">
+                        <select name ="country_id" id="agent-country_id-select" class="mb-1-fhd">
                             <?php
                             foreach ($countries->showCountries() as $country) {
                                 echo '<option value="'.$country['id'].'">'.$country['nationality'].'</option>';
@@ -223,6 +222,7 @@
         </div>
     </div>
 </div>
+<script src="./scripts/agent.js"></script>
 <?php endif; ?>
 <?php
     $content = ob_get_clean();

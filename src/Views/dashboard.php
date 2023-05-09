@@ -43,16 +43,15 @@
         <div>
             <h3 class="text-center">Modifier un pays existant</h3>
             <form method="POST" action="update-country" class="flex-column-hd">
-                <select name ="existing-country" id="existing-country" aria-label="Pays" class="mb-1-hd">
+                <select name ="existing-country" id="existing-country-select" aria-label="Pays" class="mb-1-hd">
                     <?php
                         foreach ($countries->showCountries() as $country) {
                             echo '<option value="'.$country['id'].'">'.$country['name'].'</option>';
                         }
-                    // TODO Placeholder dynamique en JS
                     ?>
                 </select>
-                <input type="text" name="name" id="country-name" placeholder="Nom du pays" aria-label="Nom du pays" class="mb-1-hd">
-                <input type="text" name="nationality" id="country-nationality" placeholder="Nationalité liée" aria-label="Nationalité liée" class="mb-1-hd">
+                <input type="text" name="name" id="country-name-input" aria-label="Nom du pays" class="mb-1-hd">
+                <input type="text" name="nationality" id="country-nationality-input" aria-label="Nationalité liée" class="mb-1-hd">
                 <button type="submit" name="updateCountry">Modifier</button>
             </form>
         </div>
@@ -73,6 +72,7 @@
         </div>
     </div>
 </div>
+<script src="./scripts/country.js"></script>
 <?php endif; ?>
 <?php
     $content = ob_get_clean();

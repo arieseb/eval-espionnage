@@ -35,6 +35,14 @@ class HideoutController extends Hideout
         }
     }
 
+    public function fetchHideouts()
+    {
+        $data = $this->showHideouts();
+        $response = ['data' => $data];
+        header('Content-Type: application/json');
+        echo json_encode($response);
+    }
+
     public function showHideout($id)
     {
         try {

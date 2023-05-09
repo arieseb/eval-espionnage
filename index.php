@@ -334,6 +334,46 @@ $router->addRoute(
     'deleteMissionAgent'
 );
 
+$router->addRoute(
+    'country_data',
+    '/spy_site/country_data',
+    'GET',
+    \App\Controllers\CountryController::class,
+    'fetchCountries'
+);
+
+$router->addRoute(
+    'hideout_data',
+    '/spy_site/hideout_data',
+    'GET',
+    \App\Controllers\HideoutController::class,
+    'fetchHideouts'
+);
+
+$router->addRoute(
+    'contact_data',
+    '/spy_site/contact_data',
+    'GET',
+    \App\Controllers\ContactController::class,
+    'fetchContacts'
+);
+
+$router->addRoute(
+    'target_data',
+    '/spy_site/target_data',
+    'GET',
+    \App\Controllers\TargetController::class,
+    'fetchTargets'
+);
+
+$router->addRoute(
+    'agent_data',
+    '/spy_site/agent_data',
+    'GET',
+    \App\Controllers\AgentController::class,
+    'fetchAgents'
+);
+
 $requestUri = $_SERVER['REQUEST_URI'];
 $requestMethod = $_SERVER['REQUEST_METHOD'];
 

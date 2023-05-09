@@ -19,5 +19,6 @@
         <footer>
             <?php require_once 'footer.php' ?>
         </footer>
+        <script src="./scripts/home.js"></script>
     </body>
 </html>
