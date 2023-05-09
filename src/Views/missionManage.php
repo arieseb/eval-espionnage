@@ -25,9 +25,9 @@ $missionContacts = new MissionContactController();
 $missionAgents = new MissionAgentController();
 ob_start();
 ?>
-<?php if (!isset($_SESSION['email'])): ?>
-    <div>
-        <h1>CONFIDENTIEL</h1>
+<?php if(!isset($_SESSION['role']) || $_SESSION['role'] !== 'ADMIN'): ?>
+    <div class="text-center">
+        <h1>-- CONFIDENTIEL --</h1>
         <p>Vous n'êtes pas autorisé à consulter cette page</p>
     </div>
 <?php else: ?>
@@ -37,20 +37,20 @@ ob_start();
 <div class="mt-3">
     <h3 class="text-center">Ajouter une nouvelle mission</h3>
     <form method="POST" action="add-mission">
-        <div class="grid-container">
+        <div class="grid-container grid-container-hd flex-column-lg-center">
             <div class="grid-item flex-column-center">
-                <input type="text" name="codename" id="codename" placeholder="Nom de code" aria-label="Nom de code">
-                <input type="text" name="title" id="title" placeholder="Titre de la mission" aria-label="Titre">
-                <input type="text" name="type" id="type" placeholder="Type de mission" aria-label="Type">
+                <input type="text" name="codename" id="codename" placeholder="Nom de code" aria-label="Nom de code" class="mb-1-hd">
+                <input type="text" name="title" id="title" placeholder="Titre de la mission" aria-label="Titre" class="mb-1-hd">
+                <input type="text" name="type" id="type" placeholder="Type de mission" aria-label="Type" class="mb-1-hd">
             </div>
             <div class="grid-item flex-column-center">
                 <div>
                     <label for="start_date">Date de début : </label>
-                    <input type="date" name="start_date" id="start_date">
+                    <input type="date" name="start_date" id="start_date" class="mb-1-hd">
                 </div>
                 <div>
                     <label for="end_date">Date de fin : </label>
-                    <input type="date" name="end_date" id="end_date">
+                    <input type="date" name="end_date" id="end_date" class="mb-1-hd">
                 </div>
                 <div>
                     <label for="country_id">Pays : </label>
@@ -66,7 +66,7 @@ ob_start();
             <div class="grid-item flex-column-center">
                 <div>
                     <label for="target_id">Cible : </label>
-                    <select name ="target_id" id="target_id">
+                    <select name ="target_id" id="target_id" class="mb-1-lg">
                         <?php
                         foreach ($targets->showTargets() as $target) {
                             echo '<option value="'.$target['id'].'">'.$target['codename'].'</option>';
@@ -77,7 +77,7 @@ ob_start();
                 </div>
                 <div>
                     <label for="contact_id">Contact : </label>
-                    <select name ="contact_id" id="contact_id" aria-label="Contact">
+                    <select name ="contact_id" id="contact_id" aria-label="Contact" class="mb-1-lg">
                         <?php
                         foreach ($contacts->showContacts() as $contact) {
                             echo '<option value="'.$contact['id'].'">'.$contact['codename'].'</option>';
@@ -87,7 +87,7 @@ ob_start();
                 </div>
                 <div>
                     <label for="agent_id">Agent : </label>
-                    <select name ="agent_id" id="agent_id" aria-label="Agent">
+                    <select name ="agent_id" id="agent_id" aria-label="Agent" class="mb-1-lg">
                         <?php
                         foreach ($agents->showAgents() as $agent) {
                             echo '<option value="'.$agent['id'].'">'.$agent['codename'].'</option>';
@@ -108,13 +108,13 @@ ob_start();
             </div>
             <div class="grid-item flex-column-center">
                 <textarea name="description" id="description" placeholder="Description de la mission" aria-label="Description"></textarea>
-                <button type="submit" name="submitMission" class="align-self-right mt-3">Ajouter</button>
+                <button type="submit" name="submitMission" class="align-self-right align-self-center-hd mt-3">Ajouter</button>
             </div>
         </div>
     </form>
 </div>
 <div class="mt-3">
-    <div class="flex-around">
+    <div class="flex-around flex-column-lg-center">
         <div>
             <h3>Ajouter une planque à une mission</h3>
             <div class="text-center">
@@ -164,7 +164,7 @@ ob_start();
     </div>
 </div>
 <div class="mt-3">
-    <div class="flex-around">
+    <div class="flex-around flex-column-lg-center">
         <div>
             <h3>Ajouter une cible à une mission</h3>
             <div class="text-center">
@@ -214,7 +214,7 @@ ob_start();
     </div>
 </div>
 <div class="mt-3">
-    <div class="flex-around">
+    <div class="flex-around flex-column-lg-center">
         <div>
             <h3>Ajouter un contact à une mission</h3>
             <div class="text-center">
@@ -264,9 +264,9 @@ ob_start();
     </div>
 </div>
 <div class="mt-3">
-    <div class="flex-around">
+    <div class="flex-around flex-column-lg-center">
         <div>
-            <h3>Ajouter un agent à une mission</h3>
+            <h3 class="text-center">Ajouter un agent à une mission</h3>
             <div class="text-center">
                 <form method="POST" action="add-mission-agent" aria-label="Mission">
                     <select name ="existing-mission" id="existing-mission" aria-label="Mission">
@@ -289,7 +289,7 @@ ob_start();
             </div>
         </div>
         <div>
-            <h3>Retirer un agent d'une mission</h3>
+            <h3 class="text-center">Retirer un agent d'une mission</h3>
             <div class="text-center">
                 <form method="POST" action="delete-mission-agent">
                     <select name ="existing-mission" id="existing-mission" aria-label="Mission">
@@ -314,7 +314,7 @@ ob_start();
     </div>
 </div>
 <div class="mt-3">
-    <div class="flex-around">
+    <div class="flex-around flex-column-lg-center">
         <div>
             <h3>Changer le statut d'une mission</h3>
             <div class="text-center">

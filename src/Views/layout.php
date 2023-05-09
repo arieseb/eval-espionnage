@@ -7,7 +7,6 @@
         <link rel="stylesheet" href="./assets/style.css"
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <!--<link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">-->
         <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap" rel="stylesheet">
     </head>
     <body>

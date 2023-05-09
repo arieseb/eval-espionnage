@@ -25,72 +25,75 @@ $hideouts = new HideoutController();
 //TODO Changer la balise du titre selon la page
 ?>
     <div>
-        <h2 class="text-center">Liste des missions</h2>
-        <table>
-            <thead>
-            <tr>
-                <th>Nom de code</th>
-                <th>Titre</th>
-                <th>Type de mission</th>
-                <th>Date de début</th>
-                <th>Date de fin</th>
-                <th>Pays</th>
-                <th>Planque</th>
-                <th>Cible(s)</th>
-                <th>Contact(s)</th>
-                <th>Agent(s)</th>
-                <th>Spécialité requise</th>
-                <th>Description</th>
-                <th>Statut de la mission</th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php foreach ($missions->showMissions() as $mission): ?>
+        <h2 class="text-center">-- Liste des missions --</h2>
+        <div class="overflow-xxl">
+            <table>
+                <thead>
                 <tr>
-                    <td><?php echo $mission['codename'] ?></td>
-                    <td><?php echo $mission['title'] ?></td>
-                    <td><?php echo $mission['type'] ?></td>
-                    <td><?php echo date_format(new \DateTime($mission['start_date']), 'd/m/Y') ?></td>
-                    <td><?php echo date_format(new \DateTime($mission['end_date']), 'd/m/Y') ?></td>
-                    <td>
-                        <?php echo $countries->showCountry($mission['country_id']); ?>
-                    </td>
-                    <td>
-                        <?php echo $hideouts->showHideout($mission['hideout_id']); ?>
-                    </td>
-                    <td>
-                        <?php
-                        foreach ($missionTargets->getMissionTarget($mission['id']) as $missionTarget){
-                            $targetList = $targets->getTarget($missionTarget['target_id']);
-                            echo $targetList['codename'] . ' ';
-                        }
-                        ?>
-                    </td>
-                    <td>
-                        <?php
-                        foreach ($missionContacts->getMissionContact($mission['id']) as $missionContact){
-                            $contactList = $contacts->getContact($missionContact['contact_id']);
-                            echo $contactList['codename'] . ' ';
-                        }
-                        ?>
-                    </td>
-                    <td>
-                        <?php
-                        foreach ($missionAgents->getMissionAgent($mission['id']) as $missionAgent){
-                            $agentList = $agents->getAgent($missionAgent['agent_id']);
-                            echo $agentList['codename'] . ' ';
-                        }
-                        ?>
-                    </td>
-                    <td>
-                        <?php echo $specialties->showSpecialty($mission['required_specialty'])['name']; ?>
-                    </td>
-                    <td><?php echo $mission['description'] ?></td>
-                    <td><?php echo $missionStatus->showStatus($mission['mission_status_id'])['name']; ?></td>
+                    <th>Nom de code</th>
+                    <th class="hidden-xl">Titre</th>
+                    <th class="hidden-lg">Type de mission</th>
+                    <th class="hidden-lg">Date de début</th>
+                    <th class="hidden-lg">Date de fin</th>
+                    <th class="hidden-md">Pays</th>
+                    <th class="hidden-xl">Planque</th>
+                    <th>Cible(s)</th>
+                    <th class="hidden-xl">Contact(s)</th>
+                    <th>Agent(s)</th>
+                    <th class="hidden-xxl">Spécialité requise</th>
+                    <th class="hidden-xxl">Description</th>
+                    <th>Statut de la mission</th>
                 </tr>
-            <?php endforeach; ?>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                <?php foreach ($missions->showMissions() as $mission): ?>
+                    <tr>
+                        <td><?php echo $mission['codename'] ?></td>
+                        <td class="hidden-xl"><?php echo $mission['title'] ?></td>
+                        <td class="hidden-lg"><?php echo $mission['type'] ?></td>
+                        <td class="hidden-lg"><?php echo date_format(new \DateTime($mission['start_date']), 'd/m/Y') ?></td>
+                        <td class="hidden-lg"><?php echo date_format(new \DateTime($mission['end_date']), 'd/m/Y') ?></td>
+                        <td class="hidden-md">
+                            <?php echo $countries->showCountry($mission['country_id']); ?>
+                        </td>
+                        <td class="hidden-xl">
+                            <?php echo $hideouts->showHideout($mission['hideout_id']); ?>
+                        </td>
+                        <td>
+                            <?php
+                            foreach ($missionTargets->getMissionTarget($mission['id']) as $missionTarget){
+                                $targetList = $targets->getTarget($missionTarget['target_id']);
+                                echo $targetList['codename'] . ' ';
+                            }
+                            ?>
+                        </td>
+                        <td class="hidden-xl">
+                            <?php
+                            foreach ($missionContacts->getMissionContact($mission['id']) as $missionContact){
+                                $contactList = $contacts->getContact($missionContact['contact_id']);
+                                echo $contactList['codename'] . ' ';
+                            }
+                            ?>
+                        </td>
+                        <td>
+                            <?php
+                            foreach ($missionAgents->getMissionAgent($mission['id']) as $missionAgent){
+                                $agentList = $agents->getAgent($missionAgent['agent_id']);
+                                echo $agentList['codename'] . ' ';
+                            }
+                            ?>
+                        </td>
+                        <td  class="hidden-xxl">
+                            <?php echo $specialties->showSpecialty($mission['required_specialty'])['name']; ?>
+                        </td>
+                        <td class="hidden-xxl"><?php echo $mission['description'] ?></td>
+                        <td><?php echo $missionStatus->showStatus($mission['mission_status_id'])['name']; ?></td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+        <p>Ce tableau affiche un maximum d'informations sur un terminal adapté. Donnez-vous les moyens de vous renseigner convenablement pour la Mère-Patrie.</p>
     </div>
 <?php
 ?>

@@ -50,6 +50,7 @@ class Login extends Database
             $_SESSION['email'] = $data['email'];
             $_SESSION['firstname'] = $data['firstname'];
             $_SESSION['lastname'] = $data['lastname'];
+            $_SESSION['role'] = $data['role'];
             header('location: dashboard');
 
             $statement = null;

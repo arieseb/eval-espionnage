@@ -9,23 +9,23 @@
     $agentSpecialties = new AgentSpecialtyController();
     ob_start();
 ?>
-<?php if (!isset($_SESSION['email'])): ?>
-    <div>
-        <h1>CONFIDENTIEL</h1>
+<?php if(!isset($_SESSION['role']) || $_SESSION['role'] !== 'ADMIN'): ?>
+    <div class="text-center">
+        <h1>-- CONFIDENTIEL --</h1>
         <p>Vous n'êtes pas autorisé à consulter cette page</p>
     </div>
 <?php else: ?>
     <?php include 'adminHeader.php'?>
 <div class="text-center mt-3">
-    <h2>Gestion des agents</h2>
+    <h2>-- Gestion des agents --</h2>
     <h3>Liste des agents répertoriés</h3>
     <table class="m-auto">
         <thead>
         <tr>
             <th>Nom de code</th>
-            <th>Prénom</th>
-            <th>Nom</th>
-            <th>Date de naissance</th>
+            <th class="hidden-xl">Prénom</th>
+            <th class="hidden-xl">Nom</th>
+            <th class="hidden-lg">Date de naissance</th>
             <th>Nationalité</th>
             <th>Spécialité(s)</th>
         </tr>
@@ -34,9 +34,9 @@
         <?php foreach ($agents->showAgents() as $agent): ?>
             <tr>
                 <td><?php echo $agent['codename'] ?></td>
-                <td><?php echo $agent['firstname'] ?></td>
-                <td><?php echo $agent['lastname'] ?></td>
-                <td><?php echo date_format(new DateTime($agent['birthdate']), 'd/m/Y') ?></td>
+                <td class="hidden-xl"><?php echo $agent['firstname'] ?></td>
+                <td class="hidden-xl"><?php echo $agent['lastname'] ?></td>
+                <td class="hidden-lg"><?php echo date_format(new DateTime($agent['birthdate']), 'd/m/Y') ?></td>
                 <td>
                     <?php echo $countries->showNationality($agent['country_id']); ?>
                 </td>
@@ -54,76 +54,88 @@
     </table>
 </div>
 <div class="mt-3">
-    <div class="flex-around">
-        <div>
-            <h3 class="text-center">Ajouter un nouvel agent</h3>
-            <form method="POST" action="add-agent">
-                <input type="text" name="codename" id="agent-codename" placeholder="Nom de code" aria-label="Nom de code">
-                <input type="text" name="firstname" id="agent-firstname" placeholder="Prénom" aria-label="Prénom">
-                <input type="text" name="lastname" id="agent-lastname" placeholder="Nom" aria-label="Nom">
-                <label for="agent-birthdate">Date de naissance : </label>
-                <input type="date" name="birthdate" id="agent-birthdate">
-                <label for="agent-country_id">Nationalité : </label>
-                <select name ="country_id" id="agent-country_id">
-                    <?php
-                    foreach ($countries->showCountries() as $country) {
-                        echo '<option value="'.$country['id'].'">'.$country['nationality'].'</option>';
-                    }
-                    ?>
-                </select>
-                <label for="specialty_id">Spécialité : </label>
-                <select name ="specialty_id" id="specialty_id" aria-label="Spécialité">
-                    <?php
-                    foreach ($specialties->showSpecialties() as $specialty) {
-                        echo '<option value="'.$specialty['id'].'">'.$specialty['name'].'</option>';
-                    }
-                    ?>
-                </select>
-                <button type="submit" name="submitAgent">Ajouter</button>
-            </form>
+    <div class="flex-column-int flex-around-fhd">
+        <div class="flex-around">
+            <div>
+                <h3 class="text-center">Ajouter un nouvel agent</h3>
+                <form method="POST" action="add-agent" class="flex-column-fhd">
+                    <input type="text" name="codename" id="agent-codename" placeholder="Nom de code" aria-label="Nom de code" class="mb-1-fhd">
+                    <input type="text" name="firstname" id="agent-firstname" placeholder="Prénom" aria-label="Prénom" class="mb-1-fhd">
+                    <input type="text" name="lastname" id="agent-lastname" placeholder="Nom" aria-label="Nom" class="mb-1-fhd">
+                    <span>
+                        <label for="agent-birthdate">Date de naissance : </label>
+                        <input type="date" name="birthdate" id="agent-birthdate" class="mb-1-fhd">
+                    </span>
+                    <span>
+                        <label for="agent-country_id">Nationalité : </label>
+                        <select name ="country_id" id="agent-country_id" class="mb-1-fhd">
+                            <?php
+                            foreach ($countries->showCountries() as $country) {
+                                echo '<option value="'.$country['id'].'">'.$country['nationality'].'</option>';
+                            }
+                            ?>
+                        </select>
+                    </span>
+                    <span>
+                        <label for="specialty_id">Spécialité : </label>
+                        <select name ="specialty_id" id="specialty_id" aria-label="Spécialité" class="mb-1-fhd">
+                            <?php
+                            foreach ($specialties->showSpecialties() as $specialty) {
+                                echo '<option value="'.$specialty['id'].'">'.$specialty['name'].'</option>';
+                            }
+                            ?>
+                        </select>
+                    </span>
+                    <button type="submit" name="submitAgent">Ajouter</button>
+                </form>
+            </div>
+        </div>
+        <div class="mt-3 flex-around">
+            <div>
+                <h3 class="text-center">Modifier un agent existant</h3>
+                <form method="POST" action="update-agent" class="flex-column-fhd">
+                    <select name ="existing-agent" id="existing-agent" aria-label="Agent" class="mb-1-fhd">
+                        <?php
+                        foreach ($agents->showAgents() as $agent) {
+                            echo '<option value="'.$agent['id'].'">'.$agent['codename'].'</option>';
+                        }
+                        // TODO Placeholder dynamique en JS
+                        ?>
+                    </select>
+                    <input type="text" name="codename" id="agent-codename" placeholder="Nom de code" aria-label="Nom de code" class="mb-1-fhd">
+                    <input type="text" name="firstname" id="agent-firstname" placeholder="Prénom" aria-label="Prénom" class="mb-1-fhd">
+                    <input type="text" name="lastname" id="agent-lastname" placeholder="Nom" aria-label="Nom" class="mb-1-fhd">
+                    <span>
+                        <label for="agent-birthdate">Date de naissance : </label>
+                        <input type="date" name="birthdate" id="agent-birthdate" class="mb-1-fhd">
+                    </span>
+                    <span>
+                        <label for="agent-country_id">Nationalité : </label>
+                        <select name ="country_id" id="agent-country_id" class="mb-1-fhd">
+                            <?php
+                            foreach ($countries->showCountries() as $country) {
+                                echo '<option value="'.$country['id'].'">'.$country['nationality'].'</option>';
+                            }
+                            ?>
+                        </select>
+                    </span>
+                    <button type="submit" name="updateAgent">Modifier</button>
+                </form>
+            </div>
         </div>
     </div>
-    <div class="mt-3 flex-around">
-        <div>
-            <h3 class="text-center">Modifier un agent existant</h3>
-            <form method="POST" action="update-agent">
-                <select name ="existing-agent" id="existing-agent" aria-label="Agent">
-                    <?php
-                    foreach ($agents->showAgents() as $agent) {
-                        echo '<option value="'.$agent['id'].'">'.$agent['codename'].'</option>';
-                    }
-                    // TODO Placeholder dynamique en JS
-                    ?>
-                </select>
-                <input type="text" name="codename" id="agent-codename" placeholder="Nom de code" aria-label="Nom de code">
-                <input type="text" name="firstname" id="agent-firstname" placeholder="Prénom" aria-label="Prénom">
-                <input type="text" name="lastname" id="agent-lastname" placeholder="Nom" aria-label="Nom">
-                <label for="agent-birthdate">Date de naissance : </label>
-                <input type="date" name="birthdate" id="agent-birthdate">
-                <label for="agent-country_id">Nationalité : </label>
-                <select name ="country_id" id="agent-country_id">
-                    <?php
-                    foreach ($countries->showCountries() as $country) {
-                        echo '<option value="'.$country['id'].'">'.$country['nationality'].'</option>';
-                    }
-                    ?>
-                </select>
-                <button type="submit" name="updateAgent">Modifier</button>
-            </form>
-        </div>
-    </div>
-    <div class="mt-3 flex-around">
+    <div class="mt-3 flex-around flex-column-xl-center">
         <div>
             <h3 class="text-center">Ajouter une spécialité à un agent</h3>
-            <form method="POST" action="add-agent-specialty">
-                <select name ="existing-agent" id="existing-agent" aria-label="Agent">
+            <form method="POST" action="add-agent-specialty"  class="flex-column-sm">
+                <select name ="existing-agent" id="existing-agent" aria-label="Agent" class="mb-1-sm">
                     <?php
                     foreach ($agents->showAgents() as $agent) {
                         echo '<option value="'.$agent['id'].'">'.$agent['codename'].'</option>';
                     }
                     ?>
                 </select>
-                <select name ="existing-specialty" id="existing-specialty" aria-label="Spécialité">
+                <select name ="existing-specialty" id="existing-specialty" aria-label="Spécialité"class="mb-1-sm">
                     <?php
                     foreach ($specialties->showSpecialties() as $specialty) {
                         echo '<option value="'.$specialty['id'].'">'.$specialty['name'].'</option>';
@@ -135,15 +147,15 @@
         </div>
         <div>
             <h3 class="text-center">Retirer une spécialité à un agent</h3>
-            <form method="POST" action="delete-agent-specialty">
-                <select name ="existing-agent" id="existing-agent" aria-label="Agent">
+            <form method="POST" action="delete-agent-specialty" class="flex-column-sm">
+                <select name ="existing-agent" id="existing-agent" aria-label="Agent"class="mb-1-sm">
                     <?php
                     foreach ($agents->showAgents() as $agent) {
                         echo '<option value="'.$agent['id'].'">'.$agent['codename'].'</option>';
                     }
                     ?>
                 </select>
-                <select name ="existing-specialty" id="existing-specialty" aria-label="Spécialité">
+                <select name ="existing-specialty" id="existing-specialty" aria-label="Spécialité"class="mb-1-sm">
                     <?php
                     foreach ($specialties->showSpecialties() as $specialty) {
                         echo '<option value="'.$specialty['id'].'">'.$specialty['name'].'</option>';
@@ -173,7 +185,7 @@
     </div>
 </div>
 <div class="text-center mt-3">
-    <h2>Gestion des spécialités</h2>
+    <h2>-- Gestion des spécialités --</h2>
     <h3>Liste des spécialités répertoriées</h3>
     <div class="flex-column-center">
         <ul>
@@ -184,7 +196,7 @@
     </div>
 </div>
 <div>
-    <div class="flex-around">
+    <div class="flex-around flex-column-lg-center">
         <div>
             <h3>Ajouter une nouvelle spécialité</h3>
             <div class="text-center">
