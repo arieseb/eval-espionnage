@@ -46,39 +46,39 @@ $hideouts = new HideoutController();
                 </thead>
                 <tbody>
                 <?php foreach ($missions->showMissions() as $mission): ?>
-                    <tr>
+                    <tr data-id="<?php echo $mission['id'] ?>">
                         <td><?php echo $mission['codename'] ?></td>
                         <td class="hidden-xl"><?php echo $mission['title'] ?></td>
                         <td class="hidden-lg"><?php echo $mission['type'] ?></td>
-                        <td class="hidden-lg"><?php echo date_format(new \DateTime($mission['start_date']), 'd/m/Y') ?></td>
-                        <td class="hidden-lg"><?php echo date_format(new \DateTime($mission['end_date']), 'd/m/Y') ?></td>
+                        <td class="hidden-lg"><?php echo date_format(new DateTime($mission['start_date']), 'd/m/Y') ?></td>
+                        <td class="hidden-lg"><?php echo date_format(new DateTime($mission['end_date']), 'd/m/Y') ?></td>
                         <td class="hidden-md">
                             <?php echo $countries->showCountry($mission['country_id']); ?>
                         </td>
                         <td class="hidden-xl">
                             <?php echo $hideouts->showHideout($mission['hideout_id']); ?>
                         </td>
-                        <td>
+                        <td class="list">
                             <?php
                             foreach ($missionTargets->getMissionTarget($mission['id']) as $missionTarget){
                                 $targetList = $targets->getTarget($missionTarget['target_id']);
-                                echo $targetList['codename'] . ' ';
+                                echo $targetList['codename'] . ' / ';
                             }
                             ?>
                         </td>
-                        <td class="hidden-xl">
+                        <td class="hidden-xl list">
                             <?php
                             foreach ($missionContacts->getMissionContact($mission['id']) as $missionContact){
                                 $contactList = $contacts->getContact($missionContact['contact_id']);
-                                echo $contactList['codename'] . ' ';
+                                echo $contactList['codename'] . ' / ';
                             }
                             ?>
                         </td>
-                        <td>
+                        <td class="list">
                             <?php
                             foreach ($missionAgents->getMissionAgent($mission['id']) as $missionAgent){
                                 $agentList = $agents->getAgent($missionAgent['agent_id']);
-                                echo $agentList['codename'] . ' ';
+                                echo $agentList['codename'] . ' / ';
                             }
                             ?>
                         </td>
@@ -94,5 +94,7 @@ $hideouts = new HideoutController();
         </div>
         <p>Ce tableau affiche un maximum d'informations sur un terminal adapté. Donnez-vous les moyens de vous renseigner convenablement pour la Mère-Patrie.</p>
     </div>
+<script src="./scripts/missionTable.js"></script>
+<script src="./scripts/trimLists.js"></script>
 <?php
 ?>

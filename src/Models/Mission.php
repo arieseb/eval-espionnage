@@ -139,7 +139,7 @@ class Mission extends Database
      */
     public function readAll(): bool|array
     {
-        $query = 'SELECT * FROM mission ORDER BY codename';
+        $query = 'SELECT * FROM mission ORDER BY start_date';
         $params = [];
         return $this->fetchAllData($query, $params);
     }

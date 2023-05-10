@@ -7,7 +7,7 @@ function dataHandler() {
     xhr.onreadystatechange = () => {
         if (xhr.readyState === 4 && xhr.status === 200) {
             let results = JSON.parse(xhr.response)
-            results.data.forEach(function(data) {
+            results.data.forEach(data => {
                 let id = data.id
                 let name = data.name
                 let nationality = data.nationality

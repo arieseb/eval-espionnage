@@ -374,6 +374,16 @@ $router->addRoute(
     'fetchAgents'
 );
 
+if (isset($_GET['id'])) {
+    $router->addRoute(
+        'mission-detail?id='.$_GET['id'],
+        '/spy_site/mission-detail?id='.$_GET['id'],
+        'GET',
+        \App\Controllers\MissionDetailController::class,
+        'render'
+    );
+}
+
 $requestUri = $_SERVER['REQUEST_URI'];
 $requestMethod = $_SERVER['REQUEST_METHOD'];
 
