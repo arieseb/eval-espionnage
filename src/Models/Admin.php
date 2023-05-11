@@ -13,6 +13,23 @@ class Admin
     private ?string $lastname;
     private ?string $firstname;
     private ?DateTimeInterface $creationDate;
+    private ?string $role;
+
+    /**
+     * @return string|null
+     */
+    public function getRole(): ?string
+    {
+        return $this->role;
+    }
+
+    /**
+     * @param string|null $role
+     */
+    public function setRole(?string $role): void
+    {
+        $this->role = $role;
+    }
 
     /**
      * @return Uuid|null

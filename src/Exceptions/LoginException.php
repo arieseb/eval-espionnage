@@ -8,6 +8,6 @@ class LoginException extends Exception
 {
     public function __construct(string $email, string $message)
     {
-        $this->message = 'Impossible de connecter l\'adresse ' . $email .'. ' . $message .'.';
+        $this->message = 'Impossible de connecter l\'adresse ' . $email .' : ' . $message .'.';
     }
 }

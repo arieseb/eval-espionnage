@@ -166,6 +166,15 @@ th {
 
 }
 
+.alert {
+    color: #FF0000;
+    border: #FF0000 1px solid;
+    background-color: rgba(255, 0, 0, 0.1);
+    margin: auto;
+    padding: 1rem;
+    width: fit-content;
+}
+
 ul {
     list-style: none;
 }
@@ -256,6 +265,10 @@ ul {
         overflow-x: auto;
         overflow-y: hidden;
     }
+
+    .hidden-xxl {
+        display: none;
+    }
 }
 
 @media screen and (max-width: 1390px)
@@ -328,6 +341,10 @@ ul {
     .hidden-md {
         display: none;
     }
+
+    #mission-list {
+        font-size: 0.7rem;
+    }
 }
 
 @media screen and (max-width: 560px)
@@ -340,5 +357,13 @@ ul {
 
     .mb-1-sm {
         margin-bottom: 0.5rem;
+    }
+
+    .hidden-sm {
+        display: none;
+    }
+
+    #site-title {
+        font-size: 1.6rem;
     }
 }

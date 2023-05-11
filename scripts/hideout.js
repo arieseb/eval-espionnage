@@ -16,9 +16,9 @@ function dataHandler() {
                 let address = data.address
                 let country_id = data.country_id
                 if (id === parseInt(hideoutSelect.value)) {
-                    codeInput.setAttribute('placeholder', code)
-                    typeInput.setAttribute('placeholder', type)
-                    addressInput.setAttribute('placeholder', address)
+                    codeInput.value = code
+                    typeInput.value = type
+                    addressInput.value = address
                     countrySelect.value = country_id
                 }
             })

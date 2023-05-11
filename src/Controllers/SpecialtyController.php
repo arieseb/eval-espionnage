@@ -17,7 +17,8 @@ class SpecialtyController extends Specialty
                 $this->add($validation->stringValidation(htmlspecialchars($_POST['name'])));
             }
         } catch (QueryException|ValidationException $e) {
-            echo '<p>' . $e->getMessage() . '</p>';
+            $_SESSION['error']  = $e->getMessage();
+            header('location: agent-manage');
         }
     }
 
@@ -26,7 +27,7 @@ class SpecialtyController extends Specialty
         try {
             return $this->readAll();
         } catch (QueryException $e) {
-            echo '<p>' . $e->getMessage() . '</p>';
+            $_SESSION['error']  = $e->getMessage();
         }
     }
 
@@ -35,7 +36,7 @@ class SpecialtyController extends Specialty
         try {
             return $this->getSpecialty($id);
         } catch (QueryException $e) {
-            echo '<p>' . $e->getMessage() . '</p>';
+            $_SESSION['error']  = $e->getMessage();
         }
     }
 
@@ -46,7 +47,8 @@ class SpecialtyController extends Specialty
                 $this->delete($_POST['delete-specialty']);
             }
         } catch (QueryException $e) {
-            echo '<p>' . $e->getMessage() . '</p>';
+            $_SESSION['error']  = $e->getMessage();
+            header('location: agent-manage');
         }
     }
 }

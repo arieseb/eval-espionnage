@@ -29,7 +29,8 @@ class MissionController extends Mission
                 );
             }
         } catch (QueryException|ValidationException $e) {
-            echo '<p>' . $e->getMessage() . '</p>';
+            $_SESSION['error']  = $e->getMessage();
+            header('location: mission-manage');
         }
     }
 
@@ -40,7 +41,8 @@ class MissionController extends Mission
                 $this->delete($_POST['delete-mission']);
             }
         } catch (QueryException $e) {
-            echo '<p>' . $e->getMessage() . '</p>';
+            $_SESSION['error']  = $e->getMessage();
+            header('location: mission-manage');
         }
     }
 
@@ -49,7 +51,7 @@ class MissionController extends Mission
         try {
             return $this->readAll();
         } catch (QueryException $e) {
-            echo '<p>' . $e->getMessage() . '</p>';
+            $_SESSION['error']  = $e->getMessage();
         }
     }
 
@@ -60,7 +62,8 @@ class MissionController extends Mission
                 $this->addHideout($_POST['existing-mission'], $_POST['hideout_id']);
             }
         } catch (QueryException $e) {
-            echo '<p>' . $e->getMessage() . '</p>';
+            $_SESSION['error']  = $e->getMessage();
+            header('location: mission-manage');
         }
     }
 
@@ -71,7 +74,8 @@ class MissionController extends Mission
                 $this->addTarget($_POST['existing-mission'], $_POST['target_id']);
             }
         } catch (QueryException $e) {
-            echo '<p>' . $e->getMessage() . '</p>';
+            $_SESSION['error']  = $e->getMessage();
+            header('location: mission-manage');
         }
     }
 
@@ -82,7 +86,8 @@ class MissionController extends Mission
                 $this->addAgent($_POST['existing-mission'], $_POST['agent_id']);
             }
         } catch (QueryException $e) {
-            echo '<p>' . $e->getMessage() . '</p>';
+            $_SESSION['error']  = $e->getMessage();
+            header('location: mission-manage');
         }
     }
 
@@ -93,7 +98,8 @@ class MissionController extends Mission
                 $this->addContact($_POST['existing-mission'], $_POST['contact_id']);
             }
         } catch (QueryException $e) {
-            echo '<p>' . $e->getMessage() . '</p>';
+            $_SESSION['error']  = $e->getMessage();
+            header('location: mission-manage');
         }
     }
 
@@ -104,7 +110,8 @@ class MissionController extends Mission
                 $this->updateStatus($_POST['existing-mission'], $_POST['status_id']);
             }
         } catch (QueryException $e) {
-            echo '<p>' . $e->getMessage() . '</p>';
+            $_SESSION['error']  = $e->getMessage();
+            header('location: mission-manage');
         }
     }
 
@@ -115,7 +122,8 @@ class MissionController extends Mission
                 $this->updateHideout($_POST['existing-mission'], $_POST['hideout_id']);
             }
         } catch (QueryException $e) {
-            echo '<p>' . $e->getMessage() . '</p>';
+            $_SESSION['error']  = $e->getMessage();
+            header('location: mission-manage');
         }
     }
 
@@ -126,7 +134,8 @@ class MissionController extends Mission
                 $this->deleteTarget($_POST['existing-mission'], $_POST['target_id']);
             }
         } catch (QueryException $e) {
-            echo '<p>' . $e->getMessage() . '</p>';
+            $_SESSION['error']  = $e->getMessage();
+            header('location: mission-manage');;
         }
     }
 
@@ -137,7 +146,8 @@ class MissionController extends Mission
                 $this->deleteContact($_POST['existing-mission'], $_POST['contact_id']);
             }
         } catch (QueryException $e) {
-            echo '<p>' . $e->getMessage() . '</p>';
+            $_SESSION['error']  = $e->getMessage();
+            header('location: mission-manage');
         }
     }
 
@@ -148,7 +158,8 @@ class MissionController extends Mission
                 $this->deleteAgent($_POST['existing-mission'], $_POST['agent_id']);
             }
         } catch (QueryException $e) {
-            echo '<p>' . $e->getMessage() . '</p>';
+            $_SESSION['error']  = $e->getMessage();
+            header('location: mission-manage');
         }
     }
 

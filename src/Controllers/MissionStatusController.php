@@ -12,7 +12,7 @@ class MissionStatusController extends MissionStatus
         try {
             return $this->readAll();
         } catch (QueryException $e) {
-            echo '<p>' . $e->getMessage() . '</p>';
+            $_SESSION['error']  = $e->getMessage();
         }
     }
 
@@ -21,7 +21,7 @@ class MissionStatusController extends MissionStatus
         try {
             return $this->getStatus($id);
         } catch (QueryException $e) {
-            echo '<p>' . $e->getMessage() . '</p>';
+            $_SESSION['error']  = $e->getMessage();
         }
     }
 }

@@ -12,8 +12,8 @@ function dataHandler() {
                 let name = data.name
                 let nationality = data.nationality
                 if (id === parseInt(countrySelect.value)) {
-                    nameInput.setAttribute('placeholder', name)
-                    nationalityInput.setAttribute('placeholder', nationality)
+                    nameInput.value = name
+                    nationalityInput.value = nationality
                 }
             })
         }

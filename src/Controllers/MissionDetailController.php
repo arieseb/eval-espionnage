@@ -14,7 +14,8 @@ class MissionDetailController extends Mission
             try {
                 return $this->getMission($_GET['id']);
             } catch (QueryException $e) {
-                echo '<p>' . $e->getMessage() . ' La mission n°' . $_GET['id'] . ' n\'existe pas.' . '</p>';
+                $_SESSION['error']  = $e->getMessage() . ' La mission n°' . $_GET['id'] . ' n\'existe pas.';
+                header('location: index');
             }
         }
     }

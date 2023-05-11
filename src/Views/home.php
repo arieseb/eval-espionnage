@@ -2,7 +2,7 @@
 
 <p class="my-5 text-center">
     -- Dans l'éventualité où la guerre froide se réchaufferait au point d'atteindre le niveau de la crise des missiles de
-    Cuba, cette interface permettra de déployer des agents pour accomplir leur devoir au nom de la Mère-Patrie. --
+    Cuba, cette interface permettra de déployer des agents pour accomplir leur devoir au nom de la Mère-Patrie --
 </p>
 
 <?php   include 'missionTable.php';?>

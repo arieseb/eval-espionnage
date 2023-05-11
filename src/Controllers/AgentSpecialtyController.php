@@ -14,7 +14,8 @@ class AgentSpecialtyController extends AgentSpecialty
                 $this->add($_POST['existing-agent'], $_POST['existing-specialty']);
             }
         } catch (QueryException $e) {
-            echo '<p>' . $e->getMessage() . '</p>';
+            $_SESSION['error']  = $e->getMessage();
+            header('location: agent-manage');
         }
     }
 
@@ -25,8 +26,8 @@ class AgentSpecialtyController extends AgentSpecialty
                 $this->delete($_POST['existing-agent'], $_POST['existing-specialty']);
             }
         } catch (QueryException $e) {
-            echo '<p>' . $e->getMessage() . '</p>';
+            $_SESSION['error']  = $e->getMessage();
+            header('location: agent-manage');
         }
     }
-
 }

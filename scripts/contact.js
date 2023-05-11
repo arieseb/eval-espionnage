@@ -18,9 +18,9 @@ function dataHandler() {
                 let birthdate = data.birthdate
                 let country_id = data.country_id
                 if (id === parseInt(contactSelect.value)) {
-                    codenameInput.setAttribute('placeholder', codename)
-                    firstnameInput.setAttribute('placeholder', firstname)
-                    lastnameInput.setAttribute('placeholder', lastname)
+                    codenameInput.value = codename
+                    firstnameInput.value = firstname
+                    lastnameInput.value = lastname
                     birthdateInput.value = birthdate
                     countrySelect.value = country_id
                 }

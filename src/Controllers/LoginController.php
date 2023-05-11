@@ -39,7 +39,8 @@ class LoginController extends Login
                 $this->login($this->email, $this->password);
             }
         } catch (LoginException $e) {
-            echo '<p>' . $e->getMessage() . '</p>';
+            $_SESSION['error']  = $e->getMessage();
+            header('location: index');
         }
     }
 

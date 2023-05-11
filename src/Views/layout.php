@@ -14,7 +14,13 @@
             <?php require_once 'header.php' ?>
         </header>
         <main>
-            <?php echo $content; ?>
+            <?php
+                if (!empty($_SESSION['error'])) {
+                    echo '<div class="alert">' . $_SESSION['error'] . '</div>';
+                    unset ($_SESSION['error']);
+            }
+            ?>
+            <?php echo $content ?>
         </main>
         <footer>
             <?php require_once 'footer.php' ?>

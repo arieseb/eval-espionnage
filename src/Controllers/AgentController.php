@@ -24,7 +24,8 @@ class AgentController extends Agent
                 );
             }
         } catch (QueryException|ValidationException $e) {
-            echo '<p>' . $e->getMessage() . '</p>';
+            $_SESSION['error']  = $e->getMessage();
+            header('location: agent-manage');
         }
     }
 
@@ -33,7 +34,7 @@ class AgentController extends Agent
         try {
             return $this->readAll();
         } catch (QueryException $e) {
-            echo '<p>' . $e->getMessage() . '</p>';
+            $_SESSION['error']  = $e->getMessage();
         }
     }
 
@@ -50,7 +51,7 @@ class AgentController extends Agent
         try {
             return $this->getAgent($id);
         } catch (QueryException $e) {
-            echo '<p>' . $e->getMessage() . '</p>';
+            $_SESSION['error']  = $e->getMessage();
         }
     }
 
@@ -69,7 +70,8 @@ class AgentController extends Agent
                 );
             }
         } catch (QueryException|ValidationException $e) {
-            echo '<p>' . $e->getMessage() . '</p>';
+            $_SESSION['error']  = $e->getMessage();
+            header('location: agent-manage');
         }
     }
 
@@ -80,7 +82,8 @@ class AgentController extends Agent
                 $this->delete($_POST['delete-agent']);
             }
         } catch (QueryException $e) {
-            echo '<p>' . $e->getMessage() . '</p>';
+            $_SESSION['error']  = $e->getMessage();
+            header('location: agent-manage');
         }
     }
 

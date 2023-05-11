@@ -23,7 +23,8 @@ class TargetController extends Target
                 );
             }
         } catch (QueryException|ValidationException $e) {
-            echo '<p>' . $e->getMessage() . '</p>';
+            $_SESSION['error']  = $e->getMessage();
+            header('location: target-manage');
         }
     }
 
@@ -32,7 +33,7 @@ class TargetController extends Target
         try {
             return $this->readAll();
         } catch (QueryException $e) {
-            echo '<p>' . $e->getMessage() . '</p>';
+            $_SESSION['error']  = $e->getMessage();
         }
     }
 
@@ -49,7 +50,7 @@ class TargetController extends Target
         try {
             return $this->getTarget($id);
         } catch (QueryException $e) {
-            echo '<p>' . $e->getMessage() . '</p>';
+            $_SESSION['error']  = $e->getMessage();
         }
     }
 
@@ -68,7 +69,8 @@ class TargetController extends Target
                 );
             }
         } catch (QueryException|ValidationException $e) {
-            echo '<p>' . $e->getMessage() . '</p>';
+            $_SESSION['error']  = $e->getMessage();
+            header('location: target-manage');
         }
     }
     public function deleteTarget()
@@ -78,7 +80,8 @@ class TargetController extends Target
                 $this->delete($_POST['delete-target']);
             }
         } catch (QueryException $e) {
-            echo '<p>' . $e->getMessage() . '</p>';
+            $_SESSION['error']  = $e->getMessage();
+            header('location: target-manage');
         }
     }
     public function render(): void

@@ -23,7 +23,8 @@ class ContactController extends Contact
                 );
             }
         } catch (QueryException|ValidationException $e) {
-            echo '<p>' . $e->getMessage() . '</p>';
+            $_SESSION['error']  = $e->getMessage();
+            header('location: contact-manage');
         }
     }
 
@@ -32,7 +33,7 @@ class ContactController extends Contact
         try {
             return $this->readAll();
         } catch (QueryException $e) {
-            echo '<p>' . $e->getMessage() . '</p>';
+            $_SESSION['error']  = $e->getMessage();
         }
     }
 
@@ -49,7 +50,7 @@ class ContactController extends Contact
         try {
             return $this->getContact($id);
         } catch (QueryException $e) {
-            echo '<p>' . $e->getMessage() . '</p>';
+            $_SESSION['error']  = $e->getMessage();
         }
     }
 
@@ -68,7 +69,8 @@ class ContactController extends Contact
                 );
             }
         } catch (QueryException|ValidationException $e) {
-            echo '<p>' . $e->getMessage() . '</p>';
+            $_SESSION['error']  = $e->getMessage();
+            header('location: contact-manage');
         }
     }
     public function deleteContact()
@@ -78,7 +80,8 @@ class ContactController extends Contact
                 $this->delete($_POST['delete-contact']);
             }
         } catch (QueryException $e) {
-            echo '<p>' . $e->getMessage() . '</p>';
+            $_SESSION['error']  = $e->getMessage();
+            header('location: contact-manage');
         }
     }
 

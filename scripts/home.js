@@ -1,6 +1,7 @@
 const dashboardLink = document.querySelector('#dashboard-link')
 const adminHeader = document.querySelector('#admin-header')
 const missionList = document.querySelector('#mission-list')
+const index = document.querySelectorAll('.index')
 const listTitle = '-- Liste des missions --'
 
 if (adminHeader) {
@@ -16,3 +17,6 @@ if (adminHeader) {
     missionList.append(h1)
 }
 
+index.forEach(index => {
+    index.remove()
+})

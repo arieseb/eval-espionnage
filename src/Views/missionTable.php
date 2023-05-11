@@ -26,7 +26,7 @@ $hideouts = new HideoutController();
     <div>
         <div id="mission-list"></div>
         <div class="overflow-xxl">
-            <table>
+            <table class="m-auto">
                 <thead>
                 <tr>
                     <th>Nom de code</th>
@@ -36,9 +36,9 @@ $hideouts = new HideoutController();
                     <th class="hidden-lg">Date de fin</th>
                     <th class="hidden-md">Pays</th>
                     <th class="hidden-xl">Planque</th>
-                    <th>Cible(s)</th>
+                    <th class="hidden-sm">Cible(s)</th>
                     <th class="hidden-xl">Contact(s)</th>
-                    <th>Agent(s)</th>
+                    <th class="hidden-sm">Agent(s)</th>
                     <th class="hidden-xxl">Spécialité requise</th>
                     <th class="hidden-xxl">Description</th>
                     <th>Statut de la mission</th>
@@ -58,7 +58,7 @@ $hideouts = new HideoutController();
                         <td class="hidden-xl">
                             <?php echo $hideouts->showHideout($mission['hideout_id']); ?>
                         </td>
-                        <td class="list">
+                        <td class="list hidden-sm">
                             <?php
                             foreach ($missionTargets->getMissionTarget($mission['id']) as $missionTarget){
                                 $targetList = $targets->getTarget($missionTarget['target_id']);
@@ -74,7 +74,7 @@ $hideouts = new HideoutController();
                             }
                             ?>
                         </td>
-                        <td class="list">
+                        <td class="list hidden-sm">
                             <?php
                             foreach ($missionAgents->getMissionAgent($mission['id']) as $missionAgent){
                                 $agentList = $agents->getAgent($missionAgent['agent_id']);
@@ -92,7 +92,7 @@ $hideouts = new HideoutController();
                 </tbody>
             </table>
         </div>
-        <p>Ce tableau affiche un maximum d'informations sur un terminal adapté. Donnez-vous les moyens de vous renseigner convenablement pour la Mère-Patrie.</p>
+        <p>Ce tableau affiche un maximum d'informations sur un terminal adapté. Donnez-vous les moyens de vous renseigner convenablement pour servir la Mère-Patrie.</p>
     </div>
 <script src="./scripts/missionTable.js"></script>
 <script src="./scripts/trimLists.js"></script>

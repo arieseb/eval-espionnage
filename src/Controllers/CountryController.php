@@ -20,7 +20,8 @@ class CountryController extends Country
                 );
             }
         } catch (QueryException|ValidationException $e) {
-            echo '<p>' . $e->getMessage() . '</p>';
+            $_SESSION['error']  = $e->getMessage();
+            header('location: dashboard');
         }
     }
 
@@ -29,7 +30,7 @@ class CountryController extends Country
         try {
             return $this->readAll();
         } catch (QueryException $e) {
-            echo '<p>' . $e->getMessage() . '</p>';
+            $_SESSION['error']  = $e->getMessage();
         }
     }
 
@@ -46,7 +47,7 @@ class CountryController extends Country
         try {
             return $this->getCountry($id)['name'];
         } catch (QueryException $e) {
-            echo '<p>' . $e->getMessage() . '</p>';
+            $_SESSION['error']  = $e->getMessage();
         }
     }
 
@@ -55,7 +56,7 @@ class CountryController extends Country
         try {
             return $this->getCountry($id)['nationality'];
         } catch (QueryException $e) {
-            echo '<p>' . $e->getMessage() . '</p>';
+            $_SESSION['error']  = $e->getMessage();
         }
     }
 
@@ -71,7 +72,8 @@ class CountryController extends Country
                 );
             }
         } catch (QueryException|ValidationException $e) {
-            echo '<p>' . $e->getMessage() . '</p>';
+            $_SESSION['error']  = $e->getMessage();
+            header('location: dashboard');
         }
     }
 
@@ -82,7 +84,8 @@ class CountryController extends Country
                 $this->delete($_POST['delete-country']);
             }
         } catch (QueryException $e) {
-            echo '<p>' . $e->getMessage() . '</p>';
+            $_SESSION['error']  = $e->getMessage();
+            header('location: dashboard');
         }
     }
 }

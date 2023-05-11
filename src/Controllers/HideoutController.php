@@ -22,7 +22,8 @@ class HideoutController extends Hideout
                 ;
             }
         } catch (QueryException|ValidationException $e) {
-            echo '<p>' . $e->getMessage() . '</p>';
+            $_SESSION['error']  = $e->getMessage();
+            header('location: hideout-manage');
         }
     }
 
@@ -31,7 +32,7 @@ class HideoutController extends Hideout
         try {
             return $this->readAll();
         } catch (QueryException $e) {
-            echo '<p>' . $e->getMessage() . '</p>';
+            $_SESSION['error']  = $e->getMessage();
         }
     }
 
@@ -66,7 +67,8 @@ class HideoutController extends Hideout
                 );
             }
         } catch (QueryException|ValidationException $e) {
-            echo '<p>' . $e->getMessage() . '</p>';
+            $_SESSION['error']  = $e->getMessage();
+            header('location: hideout-manage');
         }
     }
 
@@ -77,7 +79,8 @@ class HideoutController extends Hideout
                 $this->delete($_POST['delete-hideout']);
             }
         } catch (QueryException $e) {
-            echo '<p>' . $e->getMessage() . '</p>';
+            $_SESSION['error']  = $e->getMessage();
+            header('location: hideout-manage');
         }
     }
 
