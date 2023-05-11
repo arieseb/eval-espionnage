@@ -15,9 +15,9 @@ class AgentController extends Agent
         try {
             if (isset($_POST['submitAgent'])) {
                 $this->add(
-                    $validation->codenameValidation(htmlspecialchars($_POST['codename'])),
-                    $validation->stringValidation(htmlspecialchars($_POST['firstname'])),
-                    $validation->stringValidation(htmlspecialchars($_POST['lastname'])),
+                    htmlspecialchars($validation->stringValidation($_POST['codename'])),
+                    htmlspecialchars($validation->stringValidation($_POST['firstname'])),
+                    htmlspecialchars($validation->stringValidation($_POST['lastname'])),
                     $_POST['birthdate'],
                     $_POST['country_id'],
                     $_POST['specialty_id']
@@ -62,9 +62,9 @@ class AgentController extends Agent
             if (isset($_POST['updateAgent'])) {
                 $this->update(
                     $_POST['existing-agent'],
-                    $validation->codenameValidation(htmlspecialchars($_POST['codename'])),
-                    $validation->stringValidation(htmlspecialchars($_POST['firstname'])),
-                    $validation->stringValidation(htmlspecialchars($_POST['lastname'])),
+                    htmlspecialchars($validation->stringValidation($_POST['codename'])),
+                    htmlspecialchars($validation->stringValidation($_POST['firstname'])),
+                    htmlspecialchars($validation->stringValidation($_POST['lastname'])),
                     $_POST['birthdate'],
                     $_POST['country_id']
                 );

@@ -15,9 +15,9 @@ class ContactController extends Contact
         try {
             if (isset($_POST['submitContact'])) {
                 $this->add(
-                    $validation->codenameValidation(htmlspecialchars($_POST['codename'])),
-                    $validation->stringValidation(htmlspecialchars($_POST['firstname'])),
-                    $validation->stringValidation(htmlspecialchars($_POST['lastname'])),
+                    htmlspecialchars($validation->stringValidation($_POST['codename'])),
+                    htmlspecialchars($validation->stringValidation($_POST['firstname'])),
+                    htmlspecialchars($validation->stringValidation($_POST['lastname'])),
                     $_POST['birthdate'],
                     $_POST['country_id']
                 );
@@ -61,9 +61,9 @@ class ContactController extends Contact
             if (isset($_POST['updateContact'])) {
                 $this->update(
                     $_POST['existing-contact'],
-                    $validation->codenameValidation(htmlspecialchars($_POST['codename'])),
-                    $validation->stringValidation(htmlspecialchars($_POST['firstname'])),
-                    $validation->stringValidation(htmlspecialchars($_POST['lastname'])),
+                    htmlspecialchars($validation->stringValidation($_POST['codename'])),
+                    htmlspecialchars($validation->stringValidation($_POST['firstname'])),
+                    htmlspecialchars($validation->stringValidation($_POST['lastname'])),
                     $_POST['birthdate'],
                     $_POST['country_id']
                 );

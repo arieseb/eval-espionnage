@@ -15,10 +15,10 @@ class MissionController extends Mission
         try {
             if (isset($_POST['submitMission'])) {
                 $this->add(
-                    $validation->codenameValidation(htmlspecialchars($_POST['codename'])),
-                    $validation->stringValidation(htmlspecialchars($_POST['title'])),
+                    htmlspecialchars($validation->stringValidation($_POST['codename'])),
+                    htmlspecialchars($validation->stringValidation($_POST['title'])),
                     htmlspecialchars($_POST['description']),
-                    $validation->stringValidation(htmlspecialchars($_POST['type'])),
+                    htmlspecialchars($validation->stringValidation($_POST['type'])),
                     $_POST['start_date'],
                     $_POST['end_date'],
                     $_POST['country_id'],

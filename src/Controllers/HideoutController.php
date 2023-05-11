@@ -15,9 +15,9 @@ class HideoutController extends Hideout
         try {
             if (isset($_POST['submitHideout'])) {
                 $this->add(
-                    $validation->codenameValidation(htmlspecialchars($_POST['code'])),
+                    htmlspecialchars($validation->codenameValidation($_POST['code'])),
                     htmlspecialchars($_POST['address']),
-                    $validation->stringValidation(htmlspecialchars($_POST['type'])),
+                    htmlspecialchars($validation->codenameValidation($_POST['type'])),
                     $_POST['country_id'])
                 ;
             }
@@ -60,9 +60,9 @@ class HideoutController extends Hideout
             if (isset($_POST['updateHideout'])) {
                 $this->update(
                     $_POST['existing-hideout'],
-                    $validation->codenameValidation(htmlspecialchars($_POST['code'])),
+                    htmlspecialchars($validation->codenameValidation($_POST['code'])),
                     htmlspecialchars($_POST['address']),
-                    $validation->stringValidation(htmlspecialchars($_POST['type'])),
+                    htmlspecialchars($validation->codenameValidation($_POST['type'])),
                     $_POST['country_id']
                 );
             }

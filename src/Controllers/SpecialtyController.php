@@ -14,7 +14,7 @@ class SpecialtyController extends Specialty
         $validation = new Validation();
         try {
             if (isset($_POST['submitSpecialty'])) {
-                $this->add($validation->stringValidation(htmlspecialchars($_POST['name'])));
+                $this->add(htmlspecialchars($validation->stringValidation($_POST['name'])));
             }
         } catch (QueryException|ValidationException $e) {
             $_SESSION['error']  = $e->getMessage();

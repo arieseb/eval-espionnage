@@ -11,9 +11,9 @@ class Validation
      */
     public function codenameValidation($string)
     {
-        $pattern = '/^([\wéèêëàäùüôöïîç]{1,})( |-)?([\wéèêëàäùüôöïîç]{1,})( |-)?([\wéèêëàäùüôöïîç]{1,})$/';
-        if (!filter_var($string, FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => $pattern]])) {
-            $message = 'La chaîne de caractères "'. $string .'" n\'est pas valide, seulement les caractères alphanumériques et les tirets sont acceptés';
+        $pattern = "/^[\p{L}\d\s'-]+$/u";
+        if (!preg_match($pattern, $string)) {
+            $message = 'Le nom de code "'. $string .'" n\'est pas valide.';
             throw new ValidationException($message);
         }
         return $string;
@@ -24,9 +24,9 @@ class Validation
      */
     public function stringValidation($string)
     {
-        $pattern = '/^([a-zA-Zéèêëàäùüôöïîç]{1,})( |-)?([a-zA-Zéèêëàäùüôöïîç.]{1,})( |-)?([a-zA-Zéèêëàäùüôöïîç]{1,})( |-)?([a-zA-Zwéèêëàäùüôöïîç]{1,})?$/';
-        if (!filter_var($string, FILTER_VALIDATE_REGEXP, ['options' => ['regexp' => $pattern]])) {
-            $message = 'La chaîne de caractères "'. $string .'" n\'est pas valide, seulement les caractères alphabétiques, les tirets et éventuellement un point sont acceptés';
+        $pattern = "/^[\p{L}\d\s']+$/u";
+        if (!preg_match($pattern, $string)) {
+            $message = 'La chaîne de caractères "'. $string .'" n\'est pas valide';
             throw new ValidationException($message);
         }
         return $string;

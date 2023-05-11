@@ -15,8 +15,8 @@ class CountryController extends Country
         try {
             if (isset($_POST['submitCountry'])) {
                 $this->add(
-                    $validation->stringValidation(htmlspecialchars($_POST['name'])),
-                    $validation->stringValidation(htmlspecialchars($_POST['nationality']))
+                    htmlspecialchars($validation->stringValidation($_POST['name'])),
+                    htmlspecialchars($validation->stringValidation($_POST['nationality'])),
                 );
             }
         } catch (QueryException|ValidationException $e) {
@@ -67,8 +67,8 @@ class CountryController extends Country
             if (isset($_POST['updateCountry'])) {
                 $this->update(
                     $_POST['existing-country'],
-                    $validation->stringValidation(htmlspecialchars($_POST['name'])),
-                    $validation->stringValidation(htmlspecialchars($_POST['nationality']))
+                    htmlspecialchars($validation->stringValidation($_POST['name'])),
+                    htmlspecialchars($validation->stringValidation($_POST['nationality'])),
                 );
             }
         } catch (QueryException|ValidationException $e) {
